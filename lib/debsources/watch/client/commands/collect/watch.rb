@@ -21,19 +21,29 @@ module Debsources
               if @package
                 update_watch_content(@package)
               else
-                p @pkgs.keys
+                @pkgs.each do |record|
+                  update_watch_content(record.key)
+                  sleep 5
+                end
               end
             end
 
             def update_watch_content(package)
+              p package
               raw_url = ""
-              open("https://sources.debian.org/api/src/#{package}/latest/debian/watch") do |response|
+              package_version = ""
+              latest_watch_url = "https://sources.debian.org/api/src/#{package}/latest/debian/watch"
+              p latest_watch_url
+              open(latest_watch_url) do |response|
                 json = JSON.parse(response.read)
                 raw_url = json["raw_url"]
+                package_version = json["version"]
               end
               if raw_url
-                open("https://sources.debian.org/#{raw_url}") do |response|
-                  @pkgs[package] = {watch_content: response.read}
+                watch_file_url = "https://sources.debian.org/#{raw_url}"
+                p watch_file_url
+                open(watch_file_url) do |response|
+                  @pkgs[package] = {watch_content: response.read, version: package_version}
                 end
               end
             end
