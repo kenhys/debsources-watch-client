@@ -16,7 +16,7 @@ module Debsources
             end
 
             def execute(input: $stdin, output: $stdout)
-              return if File.exist?("pkglist.json")
+              return unless File.exist?("pkglist.json")
 
               open("pkglist.json") do |file|
                 json = JSON.load(file.read)
