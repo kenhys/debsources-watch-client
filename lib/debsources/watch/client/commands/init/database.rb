@@ -14,7 +14,7 @@ module Debsources
             end
 
             def execute(input: $stdin, output: $stdout)
-              GrnMini::create_or_open("debian-watch.db")
+              GrnMini::create_or_open("data/debian-watch.db")
               pkgs = GrnMini::Hash.new("Pkgs")
             end
           end
