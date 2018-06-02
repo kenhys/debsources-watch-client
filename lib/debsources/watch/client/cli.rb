@@ -20,6 +20,9 @@ module Debsources
         end
         map %w(--version -v) => :version
 
+        require_relative 'commands/init'
+        register Debsources::Watch::Client::Commands::Init, 'init', 'init [SUBCOMMAND]', 'Initialize database file'
+
         require_relative 'commands/collect'
         register Debsources::Watch::Client::Commands::Collect, 'collect', 'collect [SUBCOMMAND]', 'Collect debian package list'
       end
