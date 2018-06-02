@@ -16,6 +16,12 @@ module Debsources
             def execute(input: $stdin, output: $stdout)
               GrnMini::create_or_open("data/debian-watch.db")
               pkgs = GrnMini::Hash.new("Pkgs")
+              pkgs.setup_columns(name: "",
+                                 version: "",
+                                 watch_content: "",
+                                 watch_version: 0,
+                                 watch_hosting: ""
+                                )
             end
           end
         end
