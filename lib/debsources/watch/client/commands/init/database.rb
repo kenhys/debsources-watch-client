@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative '../../command'
+require 'grn_mini'
 
 module Debsources
   module Watch
@@ -13,8 +14,8 @@ module Debsources
             end
 
             def execute(input: $stdin, output: $stdout)
-              # Command logic goes here ...
-              output.puts "OK"
+              GrnMini::create_or_open("debian-watch.db")
+              pkgs = GrnMini::Hash.new("Pkgs")
             end
           end
         end
