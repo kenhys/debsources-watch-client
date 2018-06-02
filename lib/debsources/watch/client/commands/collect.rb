@@ -13,7 +13,7 @@ module Debsources
           desc 'watch PACKAGE', 'Collect debian/watch files'
           method_option :help, aliases: '-h', type: :boolean,
                                desc: 'Display usage information'
-          def watch(package)
+          def watch(package=nil)
             if options[:help]
               invoke :help, ['watch']
             else

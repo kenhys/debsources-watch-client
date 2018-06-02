@@ -8,7 +8,7 @@ module Debsources
       module Commands
         class Collect
           class Watch < Debsources::Watch::Client::Command
-            def initialize(package, options)
+            def initialize(package=nil, options)
               @package = package
               @options = options
             end
