@@ -36,8 +36,16 @@ module Debsources
               p latest_watch_url
               open(latest_watch_url) do |response|
                 json = JSON.parse(response.read)
-                raw_url = json["raw_url"]
-                package_version = json["version"]
+                if json["error"] == 404
+                  if response.base_uri.request_uri =~ /\/api\/src\/#{package}\/(.+)\/debian\/watch/
+                    package_version = $1
+                  end
+                else
+                  raw_url = json["raw_url"]
+                  package_version = json["version"]
+                end
+              end
+
               end
               if raw_url
                 watch_file_url = "https://sources.debian.org/#{raw_url}"
