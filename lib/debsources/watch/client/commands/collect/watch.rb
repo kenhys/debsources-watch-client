@@ -46,6 +46,20 @@ module Debsources
                 end
               end
 
+              timestamp = Time.now
+              unless raw_url
+                data = {}
+                unless @pkgs[package].created_at
+                  data = {
+                    watch_missing: 1, version: package_version, updated_at: timestamp
+                  }
+                else
+                  data = {
+                    watch_missing: 1, version: package_version, created_at: timestamp, updated_at: timestamp
+                  }
+                end
+                @pkgs[package] = data
+                return
               end
               if raw_url
                 watch_file_url = "https://sources.debian.org/#{raw_url}"
