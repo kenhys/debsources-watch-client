@@ -18,6 +18,7 @@ module Debsources
               pkgs = GrnMini::Hash.new("Pkgs")
               pkgs.setup_columns(name: "",
                                  version: "",
+                                 watch_missing: 0,
                                  watch_content: "",
                                  watch_version: 0,
                                  watch_hosting: "",
