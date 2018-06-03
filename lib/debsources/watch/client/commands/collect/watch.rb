@@ -30,8 +30,8 @@ module Debsources
 
             def update_watch_content(package)
               p package
-              raw_url = ""
-              package_version = ""
+              raw_url = nil
+              package_version = nil
               latest_watch_url = "https://sources.debian.org/api/src/#{package}/latest/debian/watch"
               p latest_watch_url
               open(latest_watch_url) do |response|
