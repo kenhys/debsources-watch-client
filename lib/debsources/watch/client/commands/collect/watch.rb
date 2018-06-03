@@ -74,7 +74,7 @@ module Debsources
               p watch_file_url
               open(watch_file_url) do |response|
                 timestamp = Time.now
-                unless record.created_at
+                unless @pkgs[package].created_at
                   @pkgs[package] = {
                     watch_content: response.read, version: package_version, created_at: timestamp, updated_at: timestamp
                   }
