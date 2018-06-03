@@ -20,7 +20,10 @@ module Debsources
                                  version: "",
                                  watch_content: "",
                                  watch_version: 0,
-                                 watch_hosting: ""
+                                 watch_hosting: "",
+                                 released_at: Time.new,
+                                 created_at: Time.new,
+                                 updated_at: Time.new
                                 )
             end
           end
