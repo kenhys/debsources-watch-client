@@ -61,11 +61,19 @@ module Debsources
                 @pkgs[package] = data
                 return
               end
-              if raw_url
-                watch_file_url = "https://sources.debian.org/#{raw_url}"
-                p watch_file_url
-                open(watch_file_url) do |response|
-                  @pkgs[package] = {watch_content: response.read, version: package_version}
+
+              watch_file_url = "https://sources.debian.org/#{raw_url}"
+              p watch_file_url
+              open(watch_file_url) do |response|
+                timestamp = Time.now
+                unless record.created_at
+                  @pkgs[package] = {
+                    watch_content: response.read, version: package_version, created_at: timestamp, updated_at: timestamp
+                  }
+                else
+                  @pkgs[package] = {
+                    watch_content: response.read, version: package_version, updated_at: timestamp
+                  }
                 end
               end
             end
