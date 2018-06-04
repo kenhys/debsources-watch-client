@@ -23,8 +23,9 @@ module Debsources
               else
                 @pkgs.each do |record|
                   package = record.key
-                  if @pkgs[package].updated_at > Time.now - 60 * 60 * 24
-                    p "SKIP #{package} #{Time.now - 60 * 60 * 24} < #{@pkgs[package].updated_at}"
+                  one_week = 60 * 60 * 24 * 7
+                  if @pkgs[package].updated_at > Time.now - one_week
+                    p "SKIP #{package} #{Time.now - one_week} < #{@pkgs[package].updated_at}"
                     next
                   end
                   update_watch_content(record.key)
