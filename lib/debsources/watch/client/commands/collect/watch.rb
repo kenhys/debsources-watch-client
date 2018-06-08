@@ -41,20 +41,8 @@ module Debsources
               end
               package_version, watch_url = latest_package_version(package)
 
-              timestamp = Time.now
-              unless raw_url
-                data = {}
-                unless @pkgs[package].created_at
-                  data = {
-                    watch_missing: 1, version: package_version, updated_at: timestamp
-                  }
-                else
-                  data = {
-                    watch_missing: 1, version: package_version, created_at: timestamp, updated_at: timestamp
-                  }
-                end
-                @pkgs[package] = data
               unless watch_url
+                add_missing_package(package, package_version)
                 return
               end
 
@@ -72,6 +60,21 @@ module Debsources
                   }
                 end
               end
+            end
+
+            def add_missing_package(package, version)
+              timestamp = Time.now
+              data = {}
+              unless @pkgs[package].created_at
+                data = {
+                  watch_missing: 1, version: version, updated_at: timestamp
+                }
+              else
+                data = {
+                  watch_missing: 1, version: version, created_at: timestamp, updated_at: timestamp
+                }
+              end
+              @pkgs[package] = data
             end
 
             def latest_package_version(package)
