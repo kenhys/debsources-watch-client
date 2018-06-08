@@ -86,6 +86,10 @@ module Debsources
                 end
               end
             end
+
+            def is_unstable
+              @json["versions"][0]["suites"].include?("sid")
+            end
           end
         end
       end
