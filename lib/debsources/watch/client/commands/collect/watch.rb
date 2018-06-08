@@ -46,7 +46,7 @@ module Debsources
                 return
               end
 
-              watch_file_url = "https://sources.debian.org/#{raw_url}"
+              watch_file_url = "https://sources.debian.org/#{watch_url}"
               p watch_file_url
               open(watch_file_url) do |response|
                 timestamp = Time.now
