@@ -26,8 +26,22 @@ module Debsources
                   name = package["name"]
                   pkgs[name] = {name: name}
                 end
+              packages = fetch_package_list
               end
 
+            def fetch_package_list
+              packages = nil
+              open("https://sources.debian.org/api/list/") do |request|
+                response = request.read
+                open("packagelist.json", "w+") do |file|
+                  file.puts(response)
+                end
+                json = JSON.load(response)
+                packages = json["packages"].collect do |package|
+                  package["name"]
+                end
+              end
+              packages
             end
           end
         end
