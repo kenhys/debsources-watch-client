@@ -39,21 +39,7 @@ module Debsources
               unless @pkgs[package]
                 return
               end
-              raw_url = nil
-              package_version = nil
-              latest_watch_url = "https://sources.debian.org/api/src/#{package}/latest/debian/watch"
-              p latest_watch_url
-              open(latest_watch_url) do |response|
-                json = JSON.parse(response.read)
-                if json["error"] == 404
-                  if response.base_uri.request_uri =~ /\/api\/src\/#{package}\/(.+)\/debian\/watch/
-                    package_version = $1
-                  end
-                else
-                  raw_url = json["raw_url"]
-                  package_version = json["version"]
-                end
-              end
+              package_version, content_url = latest_package_version(package)
 
               timestamp = Time.now
               unless raw_url
@@ -85,6 +71,25 @@ module Debsources
                   }
                 end
               end
+            end
+
+            def latest_package_version(package)
+              package_version = nil
+              content_url = nil
+              latest_watch_url = "https://sources.debian.org/api/src/#{package}/latest/debian/watch"
+              p latest_watch_url
+              open(latest_watch_url) do |response|
+                json = JSON.parse(response.read)
+                if json["error"] == 404
+                  if response.base_uri.request_uri =~ /\/api\/src\/#{package}\/(.+)\/debian\/watch/
+                    package_version = $1
+                  end
+                else
+                  content_url = json["raw_url"]
+                  package_version = json["version"]
+                end
+              end
+              return package_version, content_url
             end
 
             def is_unstable
