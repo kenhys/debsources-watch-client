@@ -22,7 +22,10 @@ module Debsources
               pkgs = GrnMini::Hash.new("Pkgs")
               timestamp = Time.now
               packages.each do |package|
-                pkgs[package] = {name: package, created_at: timestamp, updated_at: timestamp}
+                version = fetch_package_version(package)
+                if version
+                  pkgs[package] = {name: package, version: version, created_at: timestamp, updated_at: timestamp}
+                end
               end
             end
 
