@@ -16,18 +16,15 @@ module Debsources
             end
 
             def execute(input: $stdin, output: $stdout)
-              return unless File.exist?("pkglist.json")
 
-              open("pkglist.json") do |file|
-                json = JSON.load(file.read)
-                GrnMini::create_or_open("data/debian-watch.db")
-                pkgs = GrnMini::Hash.new("Pkgs")
-                json["packages"].each do |package|
-                  name = package["name"]
-                  pkgs[name] = {name: name}
-                end
               packages = fetch_package_list
+              GrnMini::create_or_open("data/debian-watch.db")
+              pkgs = GrnMini::Hash.new("Pkgs")
+              timestamp = Time.now
+              packages.each do |package|
+                pkgs[package] = {name: package, created_at: timestamp, updated_at: timestamp}
               end
+            end
 
             def fetch_package_list
               packages = nil
