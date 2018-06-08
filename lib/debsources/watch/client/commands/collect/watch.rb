@@ -78,6 +78,8 @@ module Debsources
             end
 
             def latest_package_version(package)
+              return nil, nil if package == "vmware-nsx"
+
               package_version = nil
               content_url = nil
               latest_watch_url = "https://sources.debian.org/api/src/#{package}/latest/debian/watch"
