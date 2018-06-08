@@ -20,6 +20,9 @@ module Debsources
         end
         map %w(--version -v) => :version
 
+        require_relative 'commands/analyze'
+        register Debsources::Watch::Client::Commands::Analyze, 'analyze', 'analyze [SUBCOMMAND]', 'Command description...'
+
         require_relative 'commands/init'
         register Debsources::Watch::Client::Commands::Init, 'init', 'init [SUBCOMMAND]', 'Initialize database file'
 
