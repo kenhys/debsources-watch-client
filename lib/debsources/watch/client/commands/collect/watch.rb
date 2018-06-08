@@ -39,7 +39,7 @@ module Debsources
               unless @pkgs[package]
                 return
               end
-              package_version, content_url = latest_package_version(package)
+              package_version, watch_url = latest_package_version(package)
 
               timestamp = Time.now
               unless raw_url
@@ -54,6 +54,7 @@ module Debsources
                   }
                 end
                 @pkgs[package] = data
+              unless watch_url
                 return
               end
 
