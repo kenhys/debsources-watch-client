@@ -53,10 +53,6 @@ module Debsources
               end
               graph.zero_degree = -90
               graph.sort = false
-              graph.hide_legend = false
-              graph.hide_title = false
-              graph.hide_line_markers = false
-              graph.marker_font_size = 20
               graph.show_values_as_labels = false
               graph.write("debian-watch-version-pie-graph.png")
             end
