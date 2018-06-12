@@ -49,7 +49,7 @@ module Debsources
 
               groups.each do |record|
                 unless record._key == 0
-                  graph.data("version #{record._key}", [record["_nsubrecs"]])
+                  graph.data("version #{record._key} (#{record['_nsubrecs']})", [record["_nsubrecs"]])
                 end
               end
               graph.zero_degree = -90
