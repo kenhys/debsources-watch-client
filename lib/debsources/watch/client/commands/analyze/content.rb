@@ -37,6 +37,7 @@ module Debsources
               end
               generate_watch_version_pie_graph
               generate_watch_file_pie_graph
+              generate_watch_host_top5_pie_graph
             end
 
             def generate_watch_version_pie_graph
@@ -78,6 +79,29 @@ module Debsources
               graph.zero_degree = -90
               graph.sort = false
               graph.write("debian-watch-file-pie-graph.png")
+            end
+
+            def generate_watch_host_top5_pie_graph
+              @pkgs = GrnMini::Hash.new("Pkgs")
+              groups = GrnMini::Util::group_with_sort(@pkgs, "watch_hosting")
+              graph = Gruff::Pie.new(600)
+              graph.title = "upstream hosting graph"
+              graph.title_font_size = 36
+
+              other_data = []
+              no_data = []
+              i = 0
+              groups.each_with_index do |record, index|
+                if index < 5
+                  graph.data("#{record._key} (#{record['_nsubrecs']})", record["_nsubrecs"])
+                else
+                  other_data << record["_nsubrecs"]
+                end
+              end
+              graph.data("other (#{other_data.inject(:+)})", other_data)
+              graph.zero_degree = -90
+              graph.sort = false
+              graph.write("debian-watch-hosting-top5-pie-graph.png")
             end
           end
         end
