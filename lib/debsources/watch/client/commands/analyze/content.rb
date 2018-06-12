@@ -98,7 +98,7 @@ module Debsources
                   other_data << record["_nsubrecs"]
                 end
               end
-              graph.data("other (#{other_data.inject(:+)})", other_data)
+              graph.data("other (#{other_data.inject(:+)})", [other_data.inject(:+)])
               graph.zero_degree = -90
               graph.sort = false
               graph.write("debian-watch-hosting-top5-pie-graph.png")
