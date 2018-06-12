@@ -62,7 +62,7 @@ module Debsources
               @pkgs = GrnMini::Hash.new("Pkgs")
               groups = GrnMini::Util::group_with_sort(@pkgs, "watch_version")
               graph = Gruff::Pie.new(600)
-              graph.title = "debian/watch file graph"
+              graph.title = "How many packages\nsupports debian/watch?"
               graph.title_font_size = 36
 
               data = []
