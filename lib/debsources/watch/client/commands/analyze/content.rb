@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require_relative '../../command'
 
 module Debsources
@@ -27,21 +25,37 @@ module Debsources
                 if record.watch_content =~ /https?:\/\/(.+?)\//
                   matched = $1.strip
                   if matched.end_with?("sf.net") or matched.end_with?("sourceforge.net")
-                    p "sourceforge.net"
+                    #p "sourceforge.net"
                     record.watch_hosting = "sourceforge.net"
                   else
-                    p matched
                     record.watch_hosting = $1
                   end
                   #p "#{record._key} #{record.watch_version} #{$1}"
                 end
               end
+              generate_watch_version_pie_graph
+            end
 
+            def generate_watch_version_pie_graph
+              @pkgs = GrnMini::Hash.new("Pkgs")
               groups = GrnMini::Util::group_with_sort(@pkgs, "watch_version")
-              #p groups.size
-              groups = GrnMini::Util::group_with_sort(@pkgs, "watch_hosting")
-              #p groups.size
-              #p groups[0]
+              graph = Gruff::Pie.new(600)
+              graph.title = "debian/watch version graph"
+              graph.title_font_size = 36
+
+              groups.each do |record|
+                unless record._key == 0
+                  graph.data("version #{record._key}", [record["_nsubrecs"]])
+                end
+              end
+              graph.zero_degree = -90
+              graph.sort = false
+              graph.hide_legend = false
+              graph.hide_title = false
+              graph.hide_line_markers = false
+              graph.marker_font_size = 20
+              graph.show_values_as_labels = false
+              graph.write("debian-watch-version-pie-graph.png")
             end
           end
         end
