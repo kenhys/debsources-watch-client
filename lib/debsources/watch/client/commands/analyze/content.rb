@@ -15,12 +15,14 @@ module Debsources
               @pkgs = GrnMini::Hash.new("Pkgs")
               pkglist = []
               @pkgs.each do |record|
-                if record.watch_content =~ /version=(\d)/
-                  #
-                  #p $1.to_i
-                  record.watch_version = $1.to_i
+                if record.watch_content
+                  if record.watch_content =~ /version=(\d)/
+                    record.watch_version = $1.to_i
+                  else
+                    record.watch_version = 1
+                  end
                 else
-                  #
+                  record.watch_version = 0
                 end
                 if record.watch_content =~ /https?:\/\/(.+?)\//
                   matched = $1.strip
