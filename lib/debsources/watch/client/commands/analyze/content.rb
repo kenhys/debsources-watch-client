@@ -89,8 +89,6 @@ module Debsources
               graph.title_font_size = 36
 
               other_data = []
-              no_data = []
-              i = 0
               groups.each_with_index do |record, index|
                 if index < 5
                   graph.data("#{record._key} (#{record['_nsubrecs']})", record["_nsubrecs"])
