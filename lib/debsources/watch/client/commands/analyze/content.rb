@@ -103,7 +103,9 @@ module Debsources
               graph.title_font_size = 36
 
               other_data = 0
+              total = 0
               groups.each_with_index do |record, index|
+                total += record["_nsubrecs"]
                 if index < 5
                   graph.data("#{record._key} (#{record['_nsubrecs']})", record["_nsubrecs"])
                 else
@@ -115,6 +117,7 @@ module Debsources
               graph.sort = false
               graph.write("debian-watch-hosting-top5-pie-graph.png")
               p other_data
+              p total
             end
           end
         end
