@@ -88,18 +88,19 @@ module Debsources
               graph.title = "upstream hosting graph"
               graph.title_font_size = 36
 
-              other_data = []
+              other_data = 0
               groups.each_with_index do |record, index|
                 if index < 5
                   graph.data("#{record._key} (#{record['_nsubrecs']})", record["_nsubrecs"])
                 else
-                  other_data << record["_nsubrecs"]
+                  other_data += record["_nsubrecs"]
                 end
               end
-              graph.data("other (#{other_data.inject(:+)})", [other_data.inject(:+)])
+              graph.data("other (#{other_data})", [other_data])
               graph.zero_degree = -90
               graph.sort = false
               graph.write("debian-watch-hosting-top5-pie-graph.png")
+              p other_data
             end
           end
         end
