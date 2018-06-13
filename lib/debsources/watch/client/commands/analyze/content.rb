@@ -24,13 +24,13 @@ module Debsources
                 else
                   record.watch_version = 0
                 end
-                if record.watch_content =~ /https?:\/\/(.+?)\//
-                  matched = $1.strip
+                if record.watch_content =~ /(ftp|https?):\/\/(.+?)\//
+                  matched = $2.strip
                   if matched.end_with?("sf.net") or matched.end_with?("sourceforge.net")
                     #p "sourceforge.net"
                     record.watch_hosting = "sourceforge.net"
                   else
-                    record.watch_hosting = $1
+                    record.watch_hosting = $2
                   end
                   #p "#{record._key} #{record.watch_version} #{$1}"
                 end
