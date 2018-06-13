@@ -83,7 +83,10 @@ module Debsources
 
             def generate_watch_host_top5_pie_graph
               @pkgs = GrnMini::Hash.new("Pkgs")
-              groups = GrnMini::Util::group_with_sort(@pkgs, "watch_hosting")
+              dataset = @pkgs.select do |record|
+                record.watch_missing == 0
+              end
+              groups = GrnMini::Util::group_with_sort(dataset, "watch_hosting")
               graph = Gruff::Pie.new(600)
               graph.title = "upstream hosting graph"
               graph.title_font_size = 36
