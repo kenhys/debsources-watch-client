@@ -15,16 +15,27 @@ module Debsources
               @pkgs = GrnMini::Hash.new("Pkgs")
               pkglist = []
               @pkgs.each do |record|
+                watch_content = ""
                 if record.watch_content
-                  if record.watch_content =~ /version=(\d)/
+                  watch_content = record.watch_content.split("\n").collect do |line|
+                    if line.strip.start_with?("#")
+                      ""
+                    else
+                      line.strip
+                    end
+                  end.join("\n")
+                end
+                if watch_content.empty?
+                  record.watch_version = 0
+                  record.watch_missing = 1
+                else
+                  if watch_content =~ /version=(\d)/
                     record.watch_version = $1.to_i
                   else
                     record.watch_version = 1
                   end
-                else
-                  record.watch_version = 0
                 end
-                if record.watch_content =~ /(ftp|https?):\/\/(.+?)\//
+                if watch_content =~ /(ftp|https?):\/\/(.+?)\//
                   matched = $2.strip
                   if matched.end_with?("sf.net") or matched.end_with?("sourceforge.net")
                     #p "sourceforge.net"
