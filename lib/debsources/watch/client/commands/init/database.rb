@@ -15,13 +15,15 @@ module Debsources
 
             def execute(input: $stdin, output: $stdout)
               GrnMini::create_or_open("data/debian-watch.db")
+              hosts = GrnMini::Hash.new("Hosts")
               pkgs = GrnMini::Hash.new("Pkgs")
+              hosts.setup_columns(packages: [pkgs])
               pkgs.setup_columns(name: "",
                                  version: "",
                                  watch_missing: 0,
                                  watch_content: "",
                                  watch_version: 0,
-                                 watch_hosting: "",
+                                 watch_hosting: hosts,
                                  released_at: Time.new,
                                  created_at: Time.new,
                                  updated_at: Time.new
