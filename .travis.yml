@@ -6,4 +6,4 @@ rvm:
   - 2.5
 before_install:
   - gem install bundler -v 1.16.2
-  - sudo apt install libgroonga-dev
+  - curl --silent --location https://github.com/groonga/groonga/raw/master/data/travis/setup.sh | sh
