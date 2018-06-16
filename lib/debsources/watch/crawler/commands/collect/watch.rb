@@ -6,7 +6,7 @@ require 'open-uri'
 
 module Debsources
   module Watch
-    module Client
+    module Crawler
       module Commands
         class Collect
           class Watch < Debsources::Watch::Client::Command

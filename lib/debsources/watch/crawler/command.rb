@@ -5,7 +5,7 @@ require 'grn_mini'
 
 module Debsources
   module Watch
-    module Client
+    module Crawler
       class Command
         extend Forwardable
 

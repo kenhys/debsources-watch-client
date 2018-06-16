@@ -5,10 +5,10 @@ require 'grn_mini'
 
 module Debsources
   module Watch
-    module Client
+    module Crawler
       module Commands
         class Init
-          class Database < Debsources::Watch::Client::Command
+          class Database < Debsources::Watch::Crawler::Command
             def initialize(options)
               @options = options
             end

@@ -1,24 +1,25 @@
 # frozen_string_literal: true
 
 require 'thor'
+require 'gruff'
 
 module Debsources
   module Watch
-    module Client
+    module Crawler
       module Commands
-        class Init < Thor
+        class Analyze < Thor
 
-          namespace :init
+          namespace :analyze
 
-          desc 'database', 'Initialize database file'
+          desc 'content', 'Command description...'
           method_option :help, aliases: '-h', type: :boolean,
                                desc: 'Display usage information'
-          def database(*)
+          def content(*)
             if options[:help]
-              invoke :help, ['database']
+              invoke :help, ['content']
             else
-              require_relative 'init/database'
-              Debsources::Watch::Client::Commands::Init::Database.new(options).execute
+              require_relative 'analyze/content'
+              Debsources::Watch::Crawler::Commands::Analyze::Content.new(options).execute
             end
           end
         end

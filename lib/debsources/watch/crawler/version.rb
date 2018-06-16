@@ -1,6 +1,6 @@
 module Debsources
   module Watch
-    module Client
+    module Crawler
       VERSION = "0.1.0"
     end
   end

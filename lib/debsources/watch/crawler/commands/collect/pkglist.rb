@@ -7,7 +7,7 @@ require 'json'
 
 module Debsources
   module Watch
-    module Client
+    module Crawler
       module Commands
         class Collect
           class Pkglist < Debsources::Watch::Client::Command

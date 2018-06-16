@@ -4,7 +4,7 @@ require 'thor'
 
 module Debsources
   module Watch
-    module Client
+    module Crawler
       # Handle the application command line parsing
       # and the dispatch to various command objects
       #

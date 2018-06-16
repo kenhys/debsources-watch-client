@@ -2,10 +2,10 @@ require_relative '../../command'
 
 module Debsources
   module Watch
-    module Client
+    module Crawler
       module Commands
         class Analyze
-          class Content < Debsources::Watch::Client::Command
+          class Content < Debsources::Watch::Crawler::Command
             def initialize(options)
               @options = options
             end

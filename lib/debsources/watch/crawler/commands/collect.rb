@@ -4,7 +4,7 @@ require 'thor'
 
 module Debsources
   module Watch
-    module Client
+    module Crawler
       module Commands
         class Collect < Thor
 
@@ -18,7 +18,7 @@ module Debsources
               invoke :help, ['watch']
             else
               require_relative 'collect/watch'
-              Debsources::Watch::Client::Commands::Collect::Watch.new(package, options).execute
+              Debsources::Watch::Crawler::Commands::Collect::Watch.new(package, options).execute
             end
           end
 
@@ -30,7 +30,7 @@ module Debsources
               invoke :help, ['pkglist']
             else
               require_relative 'collect/pkglist'
-              Debsources::Watch::Client::Commands::Collect::Pkglist.new(options).execute
+              Debsources::Watch::Crawler::Commands::Collect::Pkglist.new(options).execute
             end
           end
         end
