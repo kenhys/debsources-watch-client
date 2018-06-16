@@ -10,7 +10,7 @@ module Debsources
     module Crawler
       module Commands
         class Collect
-          class Pkglist < Debsources::Watch::Client::Command
+          class Pkglist < Debsources::Watch::Crawler::Command
             def initialize(options)
               @options = options
             end

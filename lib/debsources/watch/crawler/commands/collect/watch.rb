@@ -9,7 +9,7 @@ module Debsources
     module Crawler
       module Commands
         class Collect
-          class Watch < Debsources::Watch::Client::Command
+          class Watch < Debsources::Watch::Crawler::Command
             def initialize(package=nil, options)
               @package = package
               @options = options
