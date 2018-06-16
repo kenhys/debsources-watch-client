@@ -1,18 +1,18 @@
 
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "debsources/watch/client/version"
+require "debsources/watch/crawler/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "debsources-watch-client"
+  spec.name          = "debsources-watch-crawler"
   spec.license       = "MIT"
-  spec.version       = Debsources::Watch::Client::VERSION
+  spec.version       = Debsources::Watch::Crawler::VERSION
   spec.authors       = ["Kentaro Hayashi"]
   spec.email         = ["kenhys@gmail.com"]
 
-  spec.summary       = %q{Client tool which collects statistic data about debian/watch.}
-  spec.description   = %q{Client tool which collects statistic data about debian/watch from sources.debian.org.}
-  spec.homepage      = "https://github.com/kenhys/debsources-watch-client"
+  spec.summary       = %q{Crawler tool which collects statistic data about debian/watch.}
+  spec.description   = %q{Crawler tool which collects statistic data about debian/watch from sources.debian.org.}
+  spec.homepage      = "https://github.com/kenhys/debsources-watch-crawler"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
   # to allow pushing to a single host or delete this section to allow pushing to any host.
