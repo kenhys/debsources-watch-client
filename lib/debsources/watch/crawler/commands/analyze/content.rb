@@ -108,7 +108,7 @@ module Debsources
             def generate_watch_host_top5_pie_graph
               @pkgs = GrnMini::Hash.new("Pkgs")
               dataset = @pkgs.select do |record|
-                record.watch_missing == 0
+                record.host_missing == 0
               end
               groups = GrnMini::Util::group_with_sort(dataset, "watch_hosting")
               graph = Gruff::Pie.new(600)
