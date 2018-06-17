@@ -26,6 +26,7 @@ module Debsources
                     record.watch_version = 1
                   end
                 end
+                record.watch_content = watch_content
                 if watch_content =~ /(ftp|https?):\/\/(.+?)\//
                   matched = $2.strip
                   if matched.end_with?("sf.net") or matched.end_with?("sourceforge.net")
