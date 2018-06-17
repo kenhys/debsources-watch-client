@@ -25,6 +25,7 @@ module Debsources
                                  watch_version: 0,
                                  watch_hosting: hosts,
                                  watch_original: "",
+                                 host_missing: 0,
                                  released_at: Time.new,
                                  created_at: Time.new,
                                  updated_at: Time.new
