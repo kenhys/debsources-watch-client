@@ -52,11 +52,11 @@ module Debsources
                 timestamp = Time.now
                 unless @pkgs[package].created_at
                   @pkgs[package] = {
-                    watch_content: response.read, version: package_version, created_at: timestamp, updated_at: timestamp
+                    watch_original: response.read, version: package_version, created_at: timestamp, updated_at: timestamp
                   }
                 else
                   @pkgs[package] = {
-                    watch_content: response.read, version: package_version, updated_at: timestamp
+                    watch_original: response.read, version: package_version, updated_at: timestamp
                   }
                 end
               end
