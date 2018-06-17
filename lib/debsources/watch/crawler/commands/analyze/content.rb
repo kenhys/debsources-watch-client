@@ -19,24 +19,29 @@ module Debsources
                 if watch_content.empty?
                   record.watch_version = 0
                   record.watch_missing = 1
-                else
-                  if watch_content =~ /version=(\d)/
-                    record.watch_version = $1.to_i
-                  else
-                    record.watch_version = 1
-                  end
+                  record.host_missing = 1
+                  record.watch_content = watch_content
+                  next
                 end
-                record.watch_content = watch_content
-                if watch_content =~ /(ftp|https?):\/\/(.+?)\//
-                  matched = $2.strip
-                  if matched.end_with?("sf.net") or matched.end_with?("sourceforge.net")
+
+                if watch_content =~ /version=(\d)/
+                  record.watch_version = $1.to_i
+                else
+                  record.watch_version = 1
+                end
+                if watch_content =~ /(git|ftp|https?):\/\/(.+?)(\/|\s)/
+                  host = $2.strip
+                  if host.end_with?("sf.net") or host.end_with?("sourceforge.net")
                     #p "sourceforge.net"
                     record.watch_hosting = "sourceforge.net"
                   else
                     record.watch_hosting = $2
                   end
-                  #p "#{record._key} #{record.watch_version} #{$1}"
+                else
+                  # rhythmbox-ampache, tmux-themepack-jimeh,vflib3 doesn't have valid watch
+                  record.host_missing = 1
                 end
+                record.watch_content = watch_content
               end
               generate_watch_version_pie_graph
               generate_watch_file_pie_graph
