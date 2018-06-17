@@ -112,7 +112,7 @@ module Debsources
               end
               groups = GrnMini::Util::group_with_sort(dataset, "watch_hosting")
               graph = Gruff::Pie.new(600)
-              graph.title = "upstream hosting graph"
+              graph.title = "Top 5 upstream hosting site"
               graph.title_font_size = 36
 
               other_data = 0
