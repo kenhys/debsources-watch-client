@@ -15,16 +15,7 @@ module Debsources
               @pkgs = GrnMini::Hash.new("Pkgs")
               pkglist = []
               @pkgs.each do |record|
-                watch_content = ""
-                if record.watch_content
-                  watch_content = record.watch_content.split("\n").collect do |line|
-                    if line.strip.start_with?("#")
-                      ""
-                    else
-                      line.strip
-                    end
-                  end.join("\n")
-                end
+                watch_content = parse_watch_original(record.watch_content)
                 if watch_content.empty?
                   record.watch_version = 0
                   record.watch_missing = 1
@@ -49,6 +40,23 @@ module Debsources
               generate_watch_version_pie_graph
               generate_watch_file_pie_graph
               generate_watch_host_top5_pie_graph
+            end
+
+            def parse_watch_original(original_content)
+              content = ""
+              if original_content
+                original_content.split("\n").collect do |line|
+                  line = line.strip
+                  unless line.start_with?("#")
+                    if line.end_with?('\\')
+                      content << "\n#{line}"
+                    else
+                      content << "#{line}\n"
+                    end
+                  end
+                end
+              end
+              content
             end
 
             def generate_watch_version_pie_graph
