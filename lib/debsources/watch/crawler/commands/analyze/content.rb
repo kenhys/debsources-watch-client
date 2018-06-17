@@ -62,7 +62,10 @@ module Debsources
 
             def generate_watch_version_pie_graph
               @pkgs = GrnMini::Hash.new("Pkgs")
-              groups = GrnMini::Util::group_with_sort(@pkgs, "watch_version")
+              dataset = @pkgs.select do |record|
+                record.watch_missing == 0
+              end
+              groups = GrnMini::Util::group_with_sort(dataset, "watch_version")
               graph = Gruff::Pie.new(600)
               graph.title = "debian/watch version graph"
               graph.title_font_size = 36
