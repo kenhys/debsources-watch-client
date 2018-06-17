@@ -80,22 +80,18 @@ module Debsources
 
             def generate_watch_file_pie_graph
               @pkgs = GrnMini::Hash.new("Pkgs")
-              groups = GrnMini::Util::group_with_sort(@pkgs, "watch_version")
+              groups = GrnMini::Util::group_with_sort(@pkgs, "watch_missing")
               graph = Gruff::Pie.new(600)
               graph.title = "How many packages\nsupports debian/watch?"
               graph.title_font_size = 36
 
-              data = []
-              no_data = []
               groups.each do |record|
                 if record._key == 0
-                  no_data << record["_nsubrecs"]
+                  graph.data("watch file (#{record["_nsubrecs"]})", record["_nsubrecs"])
                 else
-                  data << record["_nsubrecs"]
+                  graph.data("no watch file (#{record["_nsubrecs"]})", record["_nsubrecs"])
                 end
               end
-              graph.data("watch file (#{data.inject(:+)})", data)
-              graph.data("no watch file (#{no_data[0]})", no_data)
               graph.zero_degree = -90
               graph.sort = false
               graph.write("debian-watch-file-pie-graph.png")
