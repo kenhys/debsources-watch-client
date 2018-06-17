@@ -67,7 +67,7 @@ module Debsources
               end
               groups = GrnMini::Util::group_with_sort(dataset, "watch_version")
               graph = Gruff::Pie.new(600)
-              graph.title = "debian/watch version graph"
+              graph.title = "Grouping by debian/watch version"
               graph.title_font_size = 36
 
               groups.each do |record|
