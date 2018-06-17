@@ -49,7 +49,7 @@ module Debsources
                   line = line.strip
                   unless line.start_with?("#")
                     if line.end_with?('\\')
-                      content << "\n#{line}"
+                      content << "#{line}"
                     else
                       content << "#{line}\n"
                     end
