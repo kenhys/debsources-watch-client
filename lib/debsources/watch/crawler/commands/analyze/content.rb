@@ -65,6 +65,15 @@ module Debsources
               content
             end
 
+            def setup_graph
+              @graph = Gruff::Pie.new(600)
+              @graph.title_font_size = 36
+              @graph.zero_degree = -90
+              @graph.sort = false
+              @graph.show_values_as_labels = false
+              @graph.theme = Gruff::Themes::PASTEL
+            end
+
             def generate_watch_version_pie_graph
               @pkgs = GrnMini::Hash.new("Pkgs")
               dataset = @pkgs.select do |record|
