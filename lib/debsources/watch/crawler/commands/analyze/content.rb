@@ -131,6 +131,30 @@ module Debsources
               p other_data
               p total
             end
+
+            def generate_watch_host_top5all_pie_graph
+              @pkgs = GrnMini::Hash.new("Pkgs")
+              dataset = @pkgs.select do |record|
+                record.host_missing == 0
+              end
+              groups = GrnMini::Util::group_with_sort(dataset, "watch_hosting")
+              setup_graph
+              @graph.title = "Top 5 upstream hosting site"
+
+              other_data = 0
+              top5 = 0
+              groups.each_with_index do |record, index|
+                total += record["_nsubrecs"]
+                if index < 5
+                  top5 += record["_nsubrecs"]
+                else
+                  other_data += record["_nsubrecs"]
+                end
+              end
+              @graph.data("top 5 sites (#{top5})", top5)
+              @graph.data("other (#{other_data})", [other_data])
+              @graph.write("debian-watch-hosting-top5all-pie-graph.png")
+            end
           end
         end
       end
