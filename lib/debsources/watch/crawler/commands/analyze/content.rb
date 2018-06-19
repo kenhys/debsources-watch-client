@@ -80,38 +80,31 @@ module Debsources
                 record.watch_missing == 0
               end
               groups = GrnMini::Util::group_with_sort(dataset, "watch_version")
-              graph = Gruff::Pie.new(600)
-              graph.title = "Grouping by debian/watch version"
-              graph.title_font_size = 36
+              setup_graph
+              @graph.title = "Grouping by debian/watch version"
 
               groups.each do |record|
                 unless record._key == 0
-                  graph.data("version #{record._key} (#{record['_nsubrecs']})", [record["_nsubrecs"]])
+                  @graph.data("version #{record._key} (#{record['_nsubrecs']})", [record["_nsubrecs"]])
                 end
               end
-              graph.zero_degree = -90
-              graph.sort = false
-              graph.show_values_as_labels = false
-              graph.write("debian-watch-version-pie-graph.png")
+              @graph.write("debian-watch-version-pie-graph.png")
             end
 
             def generate_watch_file_pie_graph
               @pkgs = GrnMini::Hash.new("Pkgs")
               groups = GrnMini::Util::group_with_sort(@pkgs, "watch_missing")
-              graph = Gruff::Pie.new(600)
-              graph.title = "How many packages\nsupports debian/watch?"
-              graph.title_font_size = 36
+              setup_graph
+              @graph.title = "How many packages\nsupports debian/watch?"
 
               groups.each do |record|
                 if record._key == 0
-                  graph.data("watch file (#{record["_nsubrecs"]})", record["_nsubrecs"])
+                  @graph.data("watch file (#{record["_nsubrecs"]})", record["_nsubrecs"])
                 else
-                  graph.data("no watch file (#{record["_nsubrecs"]})", record["_nsubrecs"])
+                  @graph.data("no watch file (#{record["_nsubrecs"]})", record["_nsubrecs"])
                 end
               end
-              graph.zero_degree = -90
-              graph.sort = false
-              graph.write("debian-watch-file-pie-graph.png")
+              @graph.write("debian-watch-file-pie-graph.png")
             end
 
             def generate_watch_host_top5_pie_graph
@@ -120,24 +113,21 @@ module Debsources
                 record.host_missing == 0
               end
               groups = GrnMini::Util::group_with_sort(dataset, "watch_hosting")
-              graph = Gruff::Pie.new(600)
-              graph.title = "Top 5 upstream hosting site"
-              graph.title_font_size = 36
+              setup_graph
+              @graph.title = "Top 5 upstream hosting site"
 
               other_data = 0
               total = 0
               groups.each_with_index do |record, index|
                 total += record["_nsubrecs"]
                 if index < 5
-                  graph.data("#{record._key} (#{record['_nsubrecs']})", record["_nsubrecs"])
+                  @graph.data("#{record._key} (#{record['_nsubrecs']})", record["_nsubrecs"])
                 else
                   other_data += record["_nsubrecs"]
                 end
               end
-              graph.data("other (#{other_data})", [other_data])
-              graph.zero_degree = -90
-              graph.sort = false
-              graph.write("debian-watch-hosting-top5-pie-graph.png")
+              @graph.data("other (#{other_data})", [other_data])
+              @graph.write("debian-watch-hosting-top5-pie-graph.png")
               p other_data
               p total
             end
