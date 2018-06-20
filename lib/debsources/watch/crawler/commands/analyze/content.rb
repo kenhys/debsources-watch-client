@@ -140,7 +140,6 @@ module Debsources
               other_data = 0
               top5 = 0
               groups.each_with_index do |record, index|
-                total += record["_nsubrecs"]
                 if index < 5
                   top5 += record["_nsubrecs"]
                 else
