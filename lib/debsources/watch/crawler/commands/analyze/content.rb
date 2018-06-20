@@ -46,6 +46,7 @@ module Debsources
               generate_watch_version_pie_graph
               generate_watch_file_pie_graph
               generate_watch_host_top5_pie_graph
+              generate_watch_host_top5all_pie_graph
             end
 
             def parse_watch_original(original_content)
