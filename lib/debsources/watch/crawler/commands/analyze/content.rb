@@ -75,7 +75,6 @@ module Debsources
             end
 
             def generate_watch_version_pie_graph
-              @pkgs = GrnMini::Hash.new("Pkgs")
               dataset = @pkgs.select do |record|
                 record.watch_missing == 0
               end
@@ -92,7 +91,6 @@ module Debsources
             end
 
             def generate_watch_file_pie_graph
-              @pkgs = GrnMini::Hash.new("Pkgs")
               groups = GrnMini::Util::group_with_sort(@pkgs, "watch_missing")
               setup_graph
               @graph.title = "How many packages\nsupports debian/watch?"
@@ -108,7 +106,6 @@ module Debsources
             end
 
             def generate_watch_host_top5_pie_graph
-              @pkgs = GrnMini::Hash.new("Pkgs")
               dataset = @pkgs.select do |record|
                 record.host_missing == 0
               end
@@ -133,7 +130,6 @@ module Debsources
             end
 
             def generate_watch_host_top5all_pie_graph
-              @pkgs = GrnMini::Hash.new("Pkgs")
               dataset = @pkgs.select do |record|
                 record.host_missing == 0
               end
