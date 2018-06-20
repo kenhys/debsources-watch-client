@@ -71,7 +71,6 @@ module Debsources
               @graph.zero_degree = -90
               @graph.sort = false
               @graph.show_values_as_labels = false
-              @graph.theme = Gruff::Themes::PASTEL
             end
 
             def generate_watch_version_pie_graph
