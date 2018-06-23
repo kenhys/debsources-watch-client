@@ -48,6 +48,7 @@ module Debsources
                   table.text("target_path")
                   table.time("updated_at")
                   table.integer("supported")
+                  table.integer("missing")
                 end
                 schema.create_table("Terms",
                                     options = {
