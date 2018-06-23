@@ -43,7 +43,7 @@ module Debsources
                   table.text("target")
                   table.text("target_path")
                   table.time("updated_at")
-                  table.int("supported")
+                  table.integer("supported")
                 end
               end
             end
