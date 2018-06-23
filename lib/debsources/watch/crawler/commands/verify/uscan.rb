@@ -68,6 +68,16 @@ module Debsources
               version
             end
 
+            def recently_updated?(package)
+              records = @dehs.select do |record|
+                record._key == package
+              end
+              if records.size == 1
+                Time.now - 60 * 60 * 8 < records[0].updated_at
+              else
+                true
+              end
+            end
             def verify_uscan_package(package)
               unless ENV["USCAN_PATH"]
                 puts "USCAN_PATH is not set"
