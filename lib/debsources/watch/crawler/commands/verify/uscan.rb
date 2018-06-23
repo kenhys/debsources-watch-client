@@ -54,6 +54,23 @@ module Debsources
               end
             end
 
+            def detect_downgrade_version
+              version = ""
+              count = 1
+              open("debian/changelog", "r") do |file|
+                file.readlines.each_with_index do |line,index|
+                  next if index == 0
+                  if line =~ /.+?\((.+?)-1\) unstable;/
+                    if count == 0
+                      return $1
+                    end
+                    count = count - 1
+                  end
+                end
+              end
+              version
+            end
+
             def verify_uscan_package(package)
               unless ENV["USCAN_PATH"]
                 puts "USCAN_PATH is not set"
