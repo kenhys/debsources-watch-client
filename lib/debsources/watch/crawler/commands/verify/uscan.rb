@@ -75,7 +75,7 @@ module Debsources
               if records.size == 1
                 Time.now - 60 * 60 * 8 < records[0].updated_at
               else
-                true
+                false
               end
             end
 
