@@ -123,6 +123,16 @@ module Debsources
                   end
                 end
               end
+              if version.empty?
+                timestamp = Time.now
+                @dehs.add(package,
+                            :package => package,
+                            :supported => 0,
+                            :missing => 1,
+                            :updated_at => timestamp
+                         )
+                return
+              end
               doc = nil
               source = ""
               Dir.chdir("#{package}-#{version}") do
