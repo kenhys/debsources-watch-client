@@ -169,6 +169,7 @@ module Debsources
                             :upstream_version => upstream_version,
                             :upstream_url => upstream_url,
                             :supported => supported,
+                            :missing => 1,
                             :status => status,
                             :updated_at => timestamp
                            )
