@@ -26,40 +26,67 @@ module Debsources
               # Command logic goes here ...
               output.puts "OK"
               if @package
-                `apt source #{@package}`
-                target_dir = nil
-                Dir.glob("#{@package}*") do |dir|
-                  if File.directory?(dir)
-                    target_dir = dir
-                    doc = nil
-                    source = ""
-                    Dir.chdir(dir) do
-                      `dch --force-bad-version --newversion 0.0.0-1 "Test"`
-                      `dch --release "Test"`
-                      source=`perl #{ENV["USCAN_PATH"]} --dehs --no-download`
-                      doc = REXML::Document.new(source)
-                    end
-                    if doc
-                      #p source
-                      upstream_version = doc.elements["/dehs/upstream-version"].text
-                      upstream_url = doc.elements["/dehs/upstream-url"].text
-                      status = doc.elements["/dehs/status"].text
-                      if status == "newer package available"
-                        timestamp = Time.now
-                        @dehs.add(@package,
-                                  :package => @package,
-                                  :revised => source,
-                                  :upstream_version => upstream_version,
-                                  :upstream_url => upstream_url,
-                                  :status => status,
-                                  :updated_at => timestamp
-                                 )
-                      end
-                    end
-                    FileUtils.rm_rf(target_dir, :secure => true)
-                    FileUtils.rm_rf("#{@package}-0.0.0", :secure => true)
-                    FileUtils.rm_rf(Dir.glob("#{@package}_*"), :secure => true)
+                verify_uscan_package(@package)
+              else
+                @pkgs = Groonga["Pkgs"]
+                dataset = @pkgs.select do |record|
+                  record.watch_missing == 0 and record.watch_hosting =~ "github.com"
+                end
+                p dataset
+                dataset.each do |record|
+                  verify_uscan_package(record._key)
+                end
+              end
+            end
+
+            def verify_uscan_package(package)
+              unless ENV["USCAN_PATH"]
+                puts "USCAN_PATH is not set"
+                return
+              end
+              `apt source #{package}`
+              target_dir = nil
+              Dir.glob("#{package}*") do |dir|
+                if File.directory?(dir)
+                  target_dir = dir
+                  doc = nil
+                  source = ""
+                  Dir.chdir(dir) do
+                    `dch --force-bad-version --newversion 0.0.0-1 "Test"`
+                    `dch --release "Test"`
+                    source=`perl #{ENV["USCAN_PATH"]} --dehs --no-download`
+                    doc = REXML::Document.new(source)
                   end
+                  if doc
+                    #p source
+                    upstream_version = doc.elements["/dehs/upstream-version"].text
+                    upstream_url = doc.elements["/dehs/upstream-url"].text
+                    status = doc.elements["/dehs/status"].text
+                    timestamp = Time.now
+                    if status == "newer package available"
+                      @dehs.add(package,
+                                :package => package,
+                                :revised => source,
+                                :upstream_version => upstream_version,
+                                :upstream_url => upstream_url,
+                                :status => status,
+                                :supported => 1,
+                                :updated_at => timestamp
+                               )
+                    else
+                      @dehs.add(package,
+                                :package => package,
+                                :revised => source,
+                                :upstream_version => upstream_version,
+                                :upstream_url => upstream_url,
+                                :status => status,
+                                :updated_at => timestamp
+                               )
+                    end
+                  end
+                  FileUtils.rm_rf(target_dir, :secure => true)
+                  FileUtils.rm_rf("#{package}-0.0.0", :secure => true)
+                  FileUtils.rm_rf(Dir.glob("#{package}_*"), :secure => true)
                 end
               end
             end
