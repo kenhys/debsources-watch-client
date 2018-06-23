@@ -145,7 +145,12 @@ module Debsources
                 else
                   supported = 0
                 end
-                status = doc.elements["/dehs/status"].text
+                status =""
+                if doc.elements["/dehs/status"]
+                  status = doc.elements["/dehs/status"].text
+                else
+                  supported = 0
+                end
                 timestamp = Time.now
                 if status == "newer package available"
                   @dehs.add(package,
