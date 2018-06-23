@@ -32,7 +32,6 @@ module Debsources
                 dataset = @pkgs.select do |record|
                   record.watch_missing == 0 and record.watch_hosting =~ "github.com"
                 end
-                p dataset
                 dataset.each do |record|
                   verify_uscan_package(record._key)
                 end
