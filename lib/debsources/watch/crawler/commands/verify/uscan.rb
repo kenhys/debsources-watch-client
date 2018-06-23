@@ -78,6 +78,18 @@ module Debsources
                 true
               end
             end
+
+            def broken_package?(package)
+              records = @dehs.select do |record|
+                record._key == package
+              end
+              if records.size == 1
+                records[0].missing
+              else
+                false
+              end
+            end
+
             def verify_uscan_package(package)
               unless ENV["USCAN_PATH"]
                 puts "USCAN_PATH is not set"
