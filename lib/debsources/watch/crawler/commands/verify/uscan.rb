@@ -38,6 +38,24 @@ module Debsources
               end
             end
 
+            def rewrite_watch_file(package)
+              content = ""
+              watch = "#{package}-0.0.0/debian/watch"
+              open(watch, "r") do |file|
+                content = file.read
+              end
+              content = content.sub(/version=(\d)/, 'version=5')
+              content = content.sub(/opts=/, '#opts=')
+              if content =~ /(ftp|https?):\/\/github.com\/(.+?)\/(.+?)\//
+                owner = $2
+                project = $3
+                content << "type=github,owner=#{owner},project=#{project}"
+              end
+              open(watch, "w+") do |file|
+                file.puts(content)
+              end
+            end
+
             def verify_uscan_package(package)
               unless ENV["USCAN_PATH"]
                 puts "USCAN_PATH is not set"
@@ -56,6 +74,7 @@ module Debsources
                     source=`perl #{ENV["USCAN_PATH"]} --dehs --no-download`
                     doc = REXML::Document.new(source)
                   end
+                  rewrite_watch_file(package)
                   if doc
                     #p source
                     upstream_version = doc.elements["/dehs/upstream-version"].text
