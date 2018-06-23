@@ -15,22 +15,26 @@ module Debsources
 
             def execute(input: $stdin, output: $stdout)
               GrnMini::create_or_open("data/debian-watch.db")
-              hosts = GrnMini::Hash.new("Hosts")
-              pkgs = GrnMini::Hash.new("Pkgs")
-              hosts.setup_columns(packages: [pkgs])
-              pkgs.setup_columns(name: "",
-                                 version: "",
-                                 watch_missing: 0,
-                                 watch_content: "",
-                                 watch_version: 0,
-                                 watch_hosting: hosts,
-                                 watch_original: "",
-                                 host_missing: 0,
-                                 released_at: Time.new,
-                                 created_at: Time.new,
-                                 updated_at: Time.new
-                                )
               Groonga::Schema.define do |schema|
+                schema.create_table("Hosts", options = {:type => :patricia_trie}) do |table|
+                end
+
+                schema.create_table("Pkgs", options = {:type => :patricia_trie}) do |table|
+                  table.text("name")
+                  table.text("version")
+                  table.text("watch_content")
+                  table.text("watch_original")
+                  table.integer("watch_missing")
+                  table.integer("watch_version")
+                  table.integer("host_missing")
+                  table.time("released_at")
+                  table.time("created_at")
+                  table.time("updated_at")
+                  table.reference("watch_hosting", "Hosts")
+                end
+                schema.create_table("Hosts", options = {:type => :patricia_trie}) do |table|
+                  table.reference("packages", "Pkgs", options = {:type => :vector})
+                end
                 schema.create_table("Dehs", options = {:type => :patricia_trie}) do |table|
                   table.reference("package", "Pkgs")
                   table.text("original")
@@ -44,6 +48,16 @@ module Debsources
                   table.text("target_path")
                   table.time("updated_at")
                   table.integer("supported")
+                end
+                schema.create_table("Terms",
+                                    options = {
+                                      :type => :patricia_trie,
+                                      :default_tokenizer => :TokenBigramSplitSymbolAlphaDigit
+                                    }) do |table|
+                  table.index("Pkgs.name", with_position: true)
+                  table.index("Pkgs.version", with_position: true)
+                  table.index("Pkgs.watch_content", with_position: true)
+                  table.index("Pkgs.watch_original", with_position: true)
                 end
               end
             end
