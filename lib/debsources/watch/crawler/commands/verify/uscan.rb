@@ -72,22 +72,26 @@ module Debsources
               records = @dehs.select do |record|
                 record._key == package
               end
-              if records.size == 1
-                Time.now - 60 * 60 * 8 < records[0].updated_at
-              else
-                false
+              records.each do |record|
+                if record.updated_at
+                  return Time.now - 60 * 60 * 8 < record.updated_at
+                end
               end
+              false
             end
 
             def broken_package?(package)
               records = @dehs.select do |record|
                 record._key == package
               end
-              if records.size == 1
-                records[0].missing
-              else
-                false
+              records.each do |record|
+                if record.missing == 1
+                  return true
+                else
+                  return false
+                end
               end
+              false
             end
 
             def verify_uscan_package(package)
