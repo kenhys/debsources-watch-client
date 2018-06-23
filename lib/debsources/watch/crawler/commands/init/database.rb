@@ -30,6 +30,22 @@ module Debsources
                                  created_at: Time.new,
                                  updated_at: Time.new
                                 )
+              Groonga::Schema.define do |schema|
+                schema.create_table("Dehs", options = {:type => :patricia_trie}) do |table|
+                  table.reference("package", "Pkgs")
+                  table.text("original")
+                  table.text("revised")
+                  table.text("status")
+                  table.text("uversion")
+                  table.text("mangled_uversion")
+                  table.text("upstream_url")
+                  table.text("upstream_version")
+                  table.text("target")
+                  table.text("target_path")
+                  table.time("updated_at")
+                  table.int("supported")
+                end
+              end
             end
           end
         end
