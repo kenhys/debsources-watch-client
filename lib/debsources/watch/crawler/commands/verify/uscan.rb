@@ -61,10 +61,7 @@ module Debsources
                 file.readlines.each_with_index do |line,index|
                   next if index == 0
                   if line =~ /.+?\((.+?)-1\) unstable;/
-                    if count == 0
-                      return $1
-                    end
-                    count = count - 1
+                    version = $1
                   end
                 end
               end
