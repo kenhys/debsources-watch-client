@@ -87,51 +87,51 @@ module Debsources
                          )
                 return
               end
-              target_dir = nil
+              version = ""
               Dir.glob("#{package}*") do |dir|
                 if File.directory?(dir)
-                  target_dir = dir
-                  doc = nil
-                  source = ""
                   Dir.chdir(dir) do
-                    `dch --force-bad-version --newversion 0.0.0-1 "Test"`
-                    `dch --release "Test"`
-                    source=`perl #{ENV["USCAN_PATH"]} --dehs --no-download`
-                    doc = REXML::Document.new(source)
+                    version = detect_downgrade_version
+                    `dch --force-bad-version --newversion #{version}-1 "Test"`
                   end
-                  rewrite_watch_file(package)
-                  if doc
-                    #p source
-                    upstream_version = doc.elements["/dehs/upstream-version"].text
-                    upstream_url = doc.elements["/dehs/upstream-url"].text
-                    status = doc.elements["/dehs/status"].text
-                    timestamp = Time.now
-                    if status == "newer package available"
-                      @dehs.add(package,
-                                :package => package,
-                                :revised => source,
-                                :upstream_version => upstream_version,
-                                :upstream_url => upstream_url,
-                                :status => status,
-                                :supported => 1,
-                                :updated_at => timestamp
-                               )
-                    else
-                      @dehs.add(package,
-                                :package => package,
-                                :revised => source,
-                                :upstream_version => upstream_version,
-                                :upstream_url => upstream_url,
-                                :status => status,
-                                :updated_at => timestamp
-                               )
-                    end
-                  end
-                  FileUtils.rm_rf(target_dir, :secure => true)
-                  FileUtils.rm_rf("#{package}-0.0.0", :secure => true)
-                  FileUtils.rm_rf(Dir.glob("#{package}_*"), :secure => true)
                 end
               end
+              doc = nil
+              source = ""
+              Dir.chdir("#{package}-#{version}") do
+                `dch --release "Test"`
+                rewrite_watch_file(package)
+                source = `perl #{ENV["USCAN_PATH"]} --dehs --no-download`
+                doc = REXML::Document.new(source)
+              end
+              if doc
+                upstream_version = doc.elements["/dehs/upstream-version"].text
+                upstream_url = doc.elements["/dehs/upstream-url"].text
+                status = doc.elements["/dehs/status"].text
+                timestamp = Time.now
+                if status == "newer package available"
+                  @dehs.add(package,
+                            :package => package,
+                            :revised => source,
+                            :upstream_version => upstream_version,
+                            :upstream_url => upstream_url,
+                            :status => status,
+                            :supported => 1,
+                            :updated_at => timestamp
+                           )
+                else
+                  @dehs.add(package,
+                            :package => package,
+                            :revised => source,
+                            :upstream_version => upstream_version,
+                            :upstream_url => upstream_url,
+                            :status => status,
+                            :updated_at => timestamp
+                           )
+                end
+              end
+              FileUtils.rm_rf("#{package}-#{version}", :secure => true)
+              FileUtils.rm_rf(Dir.glob("#{package}_*"), :secure => true)
             end
           end
         end
