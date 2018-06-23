@@ -40,7 +40,7 @@ module Debsources
 
             def rewrite_watch_file(package)
               content = ""
-              watch = "#{package}-0.0.0/debian/watch"
+              watch = "debian/watch"
               open(watch, "r") do |file|
                 content = file.read
               end
