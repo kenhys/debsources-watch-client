@@ -132,8 +132,19 @@ module Debsources
                 doc = REXML::Document.new(source)
               end
               if doc
-                upstream_version = doc.elements["/dehs/upstream-version"].text
-                upstream_url = doc.elements["/dehs/upstream-url"].text
+                upstream_version = ""
+                supported = 1
+                if doc.elements["/dehs/upstream-version"]
+                  upstream_version = doc.elements["/dehs/upstream-version"].text
+                else
+                  supported = 0
+                end
+                upstream_url = ""
+                if doc.elements["/dehs/upstream-url"]
+                  upstream_url = doc.elements["/dehs/upstream-url"].text
+                else
+                  supported = 0
+                end
                 status = doc.elements["/dehs/status"].text
                 timestamp = Time.now
                 if status == "newer package available"
@@ -143,7 +154,7 @@ module Debsources
                             :upstream_version => upstream_version,
                             :upstream_url => upstream_url,
                             :status => status,
-                            :supported => 1,
+                            :supported => supported,
                             :updated_at => timestamp
                            )
                 else
@@ -152,6 +163,7 @@ module Debsources
                             :revised => source,
                             :upstream_version => upstream_version,
                             :upstream_url => upstream_url,
+                            :supported => supported,
                             :status => status,
                             :updated_at => timestamp
                            )
