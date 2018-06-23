@@ -62,6 +62,16 @@ module Debsources
                 return
               end
               `apt source #{package}`
+              apt_result=$?
+              if apt_result != 0
+                timestamp = Time.now
+                @dehs.add(package,
+                          :package => package,
+                          :missing => 1,
+                          :updated_at => timestamp
+                         )
+                return
+              end
               target_dir = nil
               Dir.glob("#{package}*") do |dir|
                 if File.directory?(dir)
