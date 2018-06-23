@@ -44,12 +44,10 @@ module Debsources
               open(watch, "r") do |file|
                 content = file.read
               end
-              content = content.sub(/version=(\d)/, 'version=5')
-              content = content.sub(/opts=/, '#opts=')
               if content =~ /(ftp|https?):\/\/github.com\/(.+?)\/(.+?)\//
                 owner = $2
                 project = $3
-                content << "type=github,owner=#{owner},project=#{project}"
+                content = "version=5\ntype=github,owner=#{owner},project=#{project}"
               end
               open(watch, "w+") do |file|
                 file.puts(content)
