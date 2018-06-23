@@ -47,6 +47,7 @@ module Debsources
               generate_watch_file_pie_graph
               generate_watch_host_top5_pie_graph
               generate_watch_host_top5all_pie_graph
+              generate_watch_host_salsa_pie_graph
             end
 
             def parse_watch_original(original_content)
@@ -151,22 +152,23 @@ module Debsources
               @graph.write("group-by-top5all-hosting.png")
             end
 
-            def generate_watch_host_top5all_pie_graph
+            def generate_watch_host_salsa_pie_graph
               dataset = @pkgs.select do |record|
                 record.host_missing == 0
               end
+              other_count = dataset.size
               groups = GrnMini::Util::group_with_sort(dataset, "watch_hosting")
               setup_graph
-              @graph.title = "Top 5 upstream hosting site"
+              @graph.title = "How many upstream use salsa.d.o?"
 
-              other_data = 0
-              top5 = 0
               salsa = groups.select do |record|
                 record._key == "salsa.debian.org"
               end
-              p salsa
-              @graph.data("top 5 sites (#{top5})", top5)
-              @graph.data("other (#{other_data})", [other_data])
+              salsa.each do |record|
+                p record["_nsubrecs"]
+                @graph.data("salsa.d.o (#{record['_nsubrecs']})", record["_nsubrecs"])
+              end
+              @graph.data("other (#{other_count})", other_count)
               @graph.write("group-by-hosting-salsa.png")
             end
           end
