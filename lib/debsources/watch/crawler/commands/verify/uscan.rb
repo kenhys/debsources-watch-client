@@ -95,6 +95,10 @@ module Debsources
                 puts "USCAN_PATH is not set"
                 return
               end
+
+              return if broken_package?(package)
+              return if recently_updated?(package)
+
               `apt source #{package}`
               apt_result=$?
               if apt_result != 0
