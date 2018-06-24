@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
 require 'thor'
-require 'gruff'
+begin
+  require 'gruff'
+rescue
+end
 
 module Debsources
   module Watch
