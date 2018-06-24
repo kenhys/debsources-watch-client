@@ -109,7 +109,12 @@ module Debsources
             end
 
             def parse_dehs_content(source)
-              dehs = {:source => source}
+              dehs = {
+                :source => source,
+                :upstream_url => "",
+                :upstream_version => "",
+                :status => "",
+              }
               doc = REXML::Document.new(source)
               upstream_version = ""
               if doc.elements["/dehs/upstream-version"]
