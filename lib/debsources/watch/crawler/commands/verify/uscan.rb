@@ -196,27 +196,10 @@ module Debsources
                   supported = 0
                 end
                 timestamp = Time.now
-                if status == "newer package available"
-                  @dehs.add(package,
-                            :package => package,
-                            :revised => source,
-                            :upstream_version => upstream_version,
-                            :upstream_url => upstream_url,
-                            :status => status,
-                            :supported => supported,
-                            :updated_at => timestamp
-                           )
+                if newer_package_available?(dehs)
+                  add_verified_package(package, dehs)
                 else
-                  @dehs.add(package,
-                            :package => package,
-                            :revised => source,
-                            :upstream_version => upstream_version,
-                            :upstream_url => upstream_url,
-                            :supported => supported,
-                            :missing => 1,
-                            :status => status,
-                            :updated_at => timestamp
-                           )
+                  add_missing_package(package, dehs)
                 end
               end
               FileUtils.rm_rf("#{package}-#{version}", :secure => true)
