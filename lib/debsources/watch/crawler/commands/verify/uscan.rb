@@ -239,6 +239,9 @@ module Debsources
               end
               Dir.chdir("#{package}-#{version}") do
                 `dch --release "Test"`
+                unless File.exist?("debian/watch")
+                  raise
+                end
                 rewrite_watch_file(package)
                 source = `perl #{ENV["USCAN_PATH"]} --dehs --no-download`
                 dehs = parse_dehs_content(source)
