@@ -167,13 +167,14 @@ module Debsources
                          )
                 return
               end
+              dehs = {}
               doc = nil
               source = ""
               Dir.chdir("#{package}-#{version}") do
                 `dch --release "Test"`
                 rewrite_watch_file(package)
                 source = `perl #{ENV["USCAN_PATH"]} --dehs --no-download`
-                doc = REXML::Document.new(source)
+                dehs = parse_dehs_content(source)
               end
               if doc
                 upstream_version = ""
