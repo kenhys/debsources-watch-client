@@ -49,6 +49,7 @@ module Debsources
                   table.time("updated_at")
                   table.integer("supported")
                   table.integer("missing")
+                  table.integer("broken_source")
                 end
                 schema.create_table("Terms",
                                     options = {
