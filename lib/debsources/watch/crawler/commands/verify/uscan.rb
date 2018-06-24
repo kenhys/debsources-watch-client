@@ -122,6 +122,8 @@ module Debsources
                   return true
                 elsif record.missing == 1
                   return true
+                elsif record.error == 1
+                  return true
                 else
                   return false
                 end
