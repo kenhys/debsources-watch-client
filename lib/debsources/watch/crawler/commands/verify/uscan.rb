@@ -108,7 +108,7 @@ module Debsources
               end
               if doc.elements["/dehs/upstream-url"]
                 dehs[:upstream_url] = doc.elements["/dehs/upstream-url"].text
-              else
+              end
               if doc.elements["/dehs/status"]
                 dehs[:status] = doc.elements["/dehs/status"].text
               end
