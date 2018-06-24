@@ -206,18 +206,20 @@ module Debsources
                 if File.directory?(dir)
                   Dir.chdir(dir) do
                     version = detect_downgrade_version
-                    if version.empty?
-                      timestamp = Time.now
-                      @dehs.add(package,
-                                :package => package,
-                                :error => 1,
-                                :updated_at => timestamp
-                               )
-                      return
+                    unless version.empty?
+                      `dch --force-bad-version --newversion #{version}-1 "Test"`
                     end
-                    `dch --force-bad-version --newversion #{version}-1 "Test"`
                   end
                 end
+              end
+              if version.empty?
+                timestamp = Time.now
+                @dehs.add(package,
+                          :package => package,
+                          :error => 1,
+                          :updated_at => timestamp
+                         )
+                return
               end
               dehs = {}
               doc = nil
