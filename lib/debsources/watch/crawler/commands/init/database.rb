@@ -47,7 +47,7 @@ module Debsources
                   table.text("target")
                   table.text("target_path")
                   table.time("updated_at")
-                  table.integer("supported")
+                  table.integer("verified")
                   table.integer("missing")
                   table.integer("broken_source")
                 end
