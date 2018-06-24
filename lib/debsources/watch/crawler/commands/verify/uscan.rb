@@ -99,6 +99,22 @@ module Debsources
               false
             end
 
+            def parse_dehs_content(source)
+              dehs = {}
+              doc = REXML::Document.new(source)
+              upstream_version = ""
+              if doc.elements["/dehs/upstream-version"]
+                dehs[:upstream_version] = doc.elements["/dehs/upstream-version"].text
+              end
+              if doc.elements["/dehs/upstream-url"]
+                dehs[:upstream_url] = doc.elements["/dehs/upstream-url"].text
+              else
+              if doc.elements["/dehs/status"]
+                dehs[:status] = doc.elements["/dehs/status"].text
+              end
+              dehs
+            end
+
             def verify_uscan_package(package)
               unless ENV["USCAN_PATH"]
                 puts "USCAN_PATH is not set"
