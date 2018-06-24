@@ -187,8 +187,7 @@ module Debsources
                 timestamp = Time.now
                 @dehs.add(package,
                             :package => package,
-                            :supported => 0,
-                            :missing => 1,
+                            :error => 1,
                             :updated_at => timestamp
                          )
                 return
