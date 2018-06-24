@@ -227,23 +227,14 @@ module Debsources
                 end
               end
               if version.empty?
-                timestamp = Time.now
-                @dehs.add(package,
-                          :package => package,
-                          :error => 1,
-                          :updated_at => timestamp
-                         )
+                add_error_package(package)
                 return
               end
               dehs = {}
               version = version.sub(/\d:/, '')
               path = "#{package}-#{version}"
               unless Dir.exist?(path)
-                @dehs.add(package,
-                          :package => package,
-                          :error => 1,
-                          :updated_at => timestamp
-                         )
+                add_error_package(package)
                 return
               end
               Dir.chdir("#{package}-#{version}") do
