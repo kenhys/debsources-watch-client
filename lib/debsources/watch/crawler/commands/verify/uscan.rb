@@ -176,26 +176,6 @@ module Debsources
                 source = `perl #{ENV["USCAN_PATH"]} --dehs --no-download`
                 dehs = parse_dehs_content(source)
               end
-              if doc
-                upstream_version = ""
-                supported = 1
-                if doc.elements["/dehs/upstream-version"]
-                  upstream_version = doc.elements["/dehs/upstream-version"].text
-                else
-                  supported = 0
-                end
-                upstream_url = ""
-                if doc.elements["/dehs/upstream-url"]
-                  upstream_url = doc.elements["/dehs/upstream-url"].text
-                else
-                  supported = 0
-                end
-                status =""
-                if doc.elements["/dehs/status"]
-                  status = doc.elements["/dehs/status"].text
-                else
-                  supported = 0
-                end
                 timestamp = Time.now
                 if newer_package_available?(dehs)
                   add_verified_package(package, dehs)
