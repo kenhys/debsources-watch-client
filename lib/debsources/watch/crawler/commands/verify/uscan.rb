@@ -115,6 +115,10 @@ module Debsources
               dehs
             end
 
+            def newer_package_available?(dehs)
+              dehs.defined?(:status) and dehs[:status] == "newer package available"
+            end
+
             def verify_uscan_package(package)
               unless ENV["USCAN_PATH"]
                 puts "USCAN_PATH is not set"
