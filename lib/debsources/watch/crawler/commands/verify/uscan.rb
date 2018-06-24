@@ -100,7 +100,11 @@ module Debsources
               end
               records.each do |record|
                 if record.updated_at
-                  return Time.now - 60 * 60 * 8 < record.updated_at
+                  if record.verified == 1
+                    return Time.now - 60 * 60 * 8 < record.updated_at
+                  else
+                    return false
+                  end
                 end
               end
               false
