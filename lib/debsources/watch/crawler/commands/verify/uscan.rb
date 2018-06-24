@@ -207,9 +207,9 @@ module Debsources
               if version.empty?
                 timestamp = Time.now
                 @dehs.add(package,
-                            :package => package,
-                            :error => 1,
-                            :updated_at => timestamp
+                          :package => package,
+                          :error => 1,
+                          :updated_at => timestamp
                          )
                 return
               end
