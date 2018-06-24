@@ -239,10 +239,11 @@ module Debsources
                 add_error_package(package)
                 return
               end
+              begin
               Dir.chdir("#{package}-#{version}") do
                 `dch --release "Test"`
                 unless File.exist?("debian/watch")
-                  raise
+                  raise NoWatchFileError
                 end
                 rewrite_watch_file(package)
                 source = `perl #{ENV["USCAN_PATH"]} --dehs --no-download`
@@ -254,8 +255,12 @@ module Debsources
               else
                 add_missing_package(package, dehs)
               end
-              FileUtils.rm_rf("#{package}-#{version}", :secure => true)
-              FileUtils.rm_rf(Dir.glob("#{package}_*"), :secure => true)
+              rescue NoWatchFileError
+                add_missing_package(package)
+              ensure
+                FileUtils.rm_rf("#{package}-#{version}", :secure => true)
+                FileUtils.rm_rf(Dir.glob("#{package}_*"), :secure => true)
+              end
             end
           end
         end
