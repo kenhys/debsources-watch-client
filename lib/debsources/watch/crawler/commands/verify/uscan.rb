@@ -222,12 +222,11 @@ module Debsources
                 source = `perl #{ENV["USCAN_PATH"]} --dehs --no-download`
                 dehs = parse_dehs_content(source)
               end
-                timestamp = Time.now
-                if newer_package_available?(dehs)
-                  add_verified_package(package, dehs)
-                else
-                  add_missing_package(package, dehs)
-                end
+              timestamp = Time.now
+              if newer_package_available?(dehs)
+                add_verified_package(package, dehs)
+              else
+                add_missing_package(package, dehs)
               end
               FileUtils.rm_rf("#{package}-#{version}", :secure => true)
               FileUtils.rm_rf(Dir.glob("#{package}_*"), :secure => true)
