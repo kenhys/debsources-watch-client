@@ -166,6 +166,15 @@ module Debsources
                        )
             end
 
+            def add_error_package(package)
+              timestamp = Time.now
+              @dehs.add(package,
+                        :package => package,
+                        :error => 1,
+                        :updated_at => timestamp
+                       )
+            end
+
             def parse_dehs_content(source)
               dehs = {
                 :source => source,
