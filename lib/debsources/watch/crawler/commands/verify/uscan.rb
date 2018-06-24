@@ -226,6 +226,15 @@ module Debsources
               end
               dehs = {}
               version = version.sub(/\d:/, '')
+              path = "#{package}-#{version}"
+              unless Dir.exist?(path)
+                @dehs.add(package,
+                          :package => package,
+                          :error => 1,
+                          :updated_at => timestamp
+                         )
+                return
+              end
               Dir.chdir("#{package}-#{version}") do
                 `dch --release "Test"`
                 rewrite_watch_file(package)
