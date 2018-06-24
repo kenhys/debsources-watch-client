@@ -61,16 +61,19 @@ module Debsources
 
             def detect_downgrade_version
               version = ""
-              count = 1
+              count = 0
               latest_version = ""
               open("debian/changelog", "r") do |file|
                 file.readlines.each_with_index do |line,index|
                   if line =~ /.+?\((.+?)-1\) unstable;/
-                    if index == 0
+                    if count == 0
                       latest_version = $1
-                      next
+                      version = $1
+                      count = 1
+                    elsif count == 1
+                      version = $1
+                      break
                     end
-                    version = $1
                   end
                 end
               end
