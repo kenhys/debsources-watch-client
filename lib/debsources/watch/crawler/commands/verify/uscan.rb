@@ -108,6 +108,32 @@ module Debsources
                        )
             end
 
+            def add_verified_package(package, dehs)
+              timestamp = Time.now
+              @dehs.add(package,
+                        :package => package,
+                        :revised => dehs[:source],
+                        :upstream_version => dehs[:upstream_version],
+                        :upstream_url => dehs[:upstream_url],
+                        :status => dehs[:status],
+                        :verified => 1,
+                        :updated_at => timestamp
+                       )
+            end
+
+            def add_missing_package(package, dehs)
+              timestamp = Time.now
+              @dehs.add(package,
+                        :package => package,
+                        :revised => dehs[:source],
+                        :upstream_version => dehs[:upstream_version],
+                        :upstream_url => dehs[:upstream_url],
+                        :missing => 1,
+                        :status => dehs[:status],
+                        :updated_at => timestamp
+                       )
+            end
+
             def parse_dehs_content(source)
               dehs = {
                 :source => source,
