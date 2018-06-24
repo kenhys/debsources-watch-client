@@ -9,6 +9,8 @@ module Debsources
     module Crawler
       module Commands
         class Verify
+          class NoWatchFileError < StandardError; end
+
           class Uscan < Debsources::Watch::Crawler::Command
             def initialize(package, options)
               @package = package
