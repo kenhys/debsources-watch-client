@@ -74,6 +74,23 @@ module Debsources
                   end
                 end
               end
+              if version.empty?
+                begin
+                  v = Versionomy.parse(latest_version)
+                  if v.tiny > 0
+                    version = "#{v.major}.#{v.minor}.#{v.tiny-1}"
+                  else
+                    if v.minor > 0
+                      version = "#{v.major}.#{v.minor-1}.#{v.tiny}"
+                    else
+                      if v.major > 0
+                        version = "#{v.major-1}.#{v.minor}.#{v.tiny}"
+                      end
+                    end
+                  end
+                rescue
+                end
+              end
               version
             end
 
