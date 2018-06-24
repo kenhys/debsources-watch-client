@@ -155,9 +155,10 @@ module Debsources
                        )
             end
 
-            def add_missing_package(package, dehs)
+            def add_missing_package(package, dehs = nil)
               timestamp = Time.now
-              @dehs.add(package,
+              if dehs
+                @dehs.add(package,
                         :package => package,
                         :revised => dehs[:source],
                         :upstream_version => dehs[:upstream_version],
@@ -165,7 +166,14 @@ module Debsources
                         :missing => 1,
                         :status => dehs[:status],
                         :updated_at => timestamp
-                       )
+                         )
+              else
+                @dehs.add(package,
+                        :package => package,
+                        :missing => 1,
+                        :updated_at => timestamp
+                         )
+              end
             end
 
             def add_error_package(package)
