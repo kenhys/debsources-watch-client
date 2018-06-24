@@ -99,6 +99,15 @@ module Debsources
               false
             end
 
+            def add_broken_source(package)
+              timestamp = Time.now
+              @dehs.add(package,
+                        :package => package,
+                        :broken_source => 1,
+                        :updated_at => timestamp
+                       )
+            end
+
             def parse_dehs_content(source)
               dehs = {:source => source}
               doc = REXML::Document.new(source)
@@ -131,12 +140,7 @@ module Debsources
               `apt source #{package}`
               apt_result=$?
               if apt_result != 0
-                timestamp = Time.now
-                @dehs.add(package,
-                          :package => package,
-                          :missing => 1,
-                          :updated_at => timestamp
-                         )
+                add_broken_source(package)
                 return
               end
               version = ""
