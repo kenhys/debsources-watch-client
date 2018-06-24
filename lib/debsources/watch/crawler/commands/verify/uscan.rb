@@ -222,8 +222,6 @@ module Debsources
                 return
               end
               dehs = {}
-              doc = nil
-              source = ""
               Dir.chdir("#{package}-#{version}") do
                 `dch --release "Test"`
                 rewrite_watch_file(package)
