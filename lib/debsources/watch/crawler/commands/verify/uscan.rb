@@ -29,13 +29,18 @@ module Debsources
                 verify_uscan_package(@package)
               else
                 @pkgs = Groonga["Pkgs"]
-                dataset = @pkgs.select do |record|
-                  record.watch_missing == 0 and record.watch_hosting =~ "github.com"
-                end
+                dataset = select_hosting_dataset("github.com")
                 dataset.each do |record|
                   verify_uscan_package(record._key)
                 end
               end
+            end
+
+            def select_hosting_dataset(hosting)
+              dataset = @pkgs.select do |record|
+                  record.watch_missing == 0 and record.watch_hosting =~ hosting
+              end
+              dataset
             end
 
             def rewrite_watch_file(package)
