@@ -111,7 +111,9 @@ module Debsources
                 record._key == package
               end
               records.each do |record|
-                if record.broken_source == 1
+                case record
+                when record.broken_source == 1
+                when record.missing == 1
                   return true
                 else
                   return false
