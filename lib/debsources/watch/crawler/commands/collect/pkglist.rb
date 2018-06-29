@@ -31,6 +31,20 @@ module Debsources
                            :updated_at => timestamp)
                 end
               end
+              pkgs = Groonga["Pkgs"]
+              registered_list = []
+              pkgs.each do |record|
+                registered_list << record._key
+              end
+              remove_targets = []
+              registered_list.each do |package|
+                unless packages.include?(package)
+                  remove_targets << package
+                end
+              end
+              pkgs.delete do |record|
+                remove_targets.include?(record._key)
+              end
             end
 
             def fetch_package_list
