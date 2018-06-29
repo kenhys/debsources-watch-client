@@ -13,13 +13,12 @@ module Debsources
           class Pkglist < Debsources::Watch::Crawler::Command
             def initialize(options)
               @options = options
+              GrnMini::create_or_open("data/debian-watch.db")
             end
 
             def execute(input: $stdin, output: $stdout)
 
               packages = fetch_package_list
-              GrnMini::create_or_open("data/debian-watch.db")
-              pkgs = GrnMini::Hash.new("Pkgs")
               timestamp = Time.now
               packages.each do |package|
                 version = fetch_package_version(package)
