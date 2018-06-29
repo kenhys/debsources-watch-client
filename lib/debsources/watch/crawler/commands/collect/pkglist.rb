@@ -19,11 +19,16 @@ module Debsources
             def execute(input: $stdin, output: $stdout)
 
               packages = fetch_package_list
+              pkgs = Groonga["Pkgs"]
               timestamp = Time.now
               packages.each do |package|
                 version = fetch_package_version(package)
                 if version
-                  pkgs[package] = {name: package, version: version, created_at: timestamp, updated_at: timestamp}
+                  pkgs.add(package,
+                           :name => package,
+                           :version => version
+                           :created_at => timestamp,
+                           :updated_at => timestamp)
                 end
               end
             end
