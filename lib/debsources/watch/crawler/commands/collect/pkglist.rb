@@ -58,18 +58,6 @@ module Debsources
               packages
             end
 
-            def fetch_package_version(package)
-              pkginfo_url = "https://sources.debian.org/api/src/#{package}"
-              p pkginfo_url
-              version = nil
-              open(pkginfo_url) do |request|
-                json = JSON.parse(request.read)
-                if json["versions"][0]["suites"].include?("sid")
-                  version = json["versions"][0]["version"]
-                end
-              end
-              version
-            end
           end
         end
       end
