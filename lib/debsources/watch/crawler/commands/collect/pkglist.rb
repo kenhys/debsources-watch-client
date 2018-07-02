@@ -36,8 +36,11 @@ module Debsources
                   remove_targets << package
                 end
               end
-              @pkgs.delete do |record|
-                remove_targets.include?(record._key)
+              remove_targets.each do |target|
+                p "removing #{target}"
+                @pkgs.delete do |record|
+                  record._key == target
+                end
               end
             end
 
