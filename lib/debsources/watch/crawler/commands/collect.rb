@@ -10,6 +10,18 @@ module Debsources
 
           namespace :collect
 
+          desc 'pkgversion [PACKAGE]', 'Command description...'
+          method_option :help, aliases: '-h', type: :boolean,
+                               desc: 'Display usage information'
+          def pkgversion(package = nil)
+            if options[:help]
+              invoke :help, ['pkgversion']
+            else
+              require_relative 'collect/pkgversion'
+              Debsources::Watch::Crawler::Commands::Collect::Pkgversion.new(package, options).execute
+            end
+          end
+
           desc 'watch PACKAGE', 'Collect debian/watch files'
           method_option :help, aliases: '-h', type: :boolean,
                                desc: 'Display usage information'
