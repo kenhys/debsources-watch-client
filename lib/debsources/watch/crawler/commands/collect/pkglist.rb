@@ -22,14 +22,10 @@ module Debsources
               pkgs = Groonga["Pkgs"]
               timestamp = Time.now
               packages.each do |package|
-                version = fetch_package_version(package)
-                if version
-                  pkgs.add(package,
-                           :name => package,
-                           :version => version
-                           :created_at => timestamp,
-                           :updated_at => timestamp)
-                end
+                pkgs.add(package,
+                         :name => package,
+                         :created_at => timestamp,
+                         :updated_at => timestamp)
               end
               pkgs = Groonga["Pkgs"]
               registered_list = []
