@@ -14,22 +14,20 @@ module Debsources
             def initialize(options)
               @options = options
               GrnMini::create_or_open("data/debian-watch.db")
+              @pkgs = Groonga["Pkgs"]
             end
 
             def execute(input: $stdin, output: $stdout)
-
               packages = fetch_package_list
-              pkgs = Groonga["Pkgs"]
               timestamp = Time.now
               packages.each do |package|
-                pkgs.add(package,
-                         :name => package,
-                         :created_at => timestamp,
-                         :updated_at => timestamp)
+                @pkgs.add(package,
+                          :name => package,
+                          :created_at => timestamp,
+                          :updated_at => timestamp)
               end
-              pkgs = Groonga["Pkgs"]
               registered_list = []
-              pkgs.each do |record|
+              @pkgs.each do |record|
                 registered_list << record._key
               end
               remove_targets = []
@@ -38,7 +36,7 @@ module Debsources
                   remove_targets << package
                 end
               end
-              pkgs.delete do |record|
+              @pkgs.delete do |record|
                 remove_targets.include?(record._key)
               end
             end
