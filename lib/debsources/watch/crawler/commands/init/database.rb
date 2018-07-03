@@ -33,7 +33,7 @@ module Debsources
                   table.time("created_at")
                   table.time("updated_at")
                   table.reference("watch_hosting", "Hosts")
-                  table.reference("releases", "Releases", :type => :vector)
+                  table.reference("suites", "Suites", :type => :vector)
                 end
                 schema.create_table("Hosts", options = {:type => :patricia_trie}) do |table|
                   table.reference("packages", "Pkgs", options = {:type => :vector})
