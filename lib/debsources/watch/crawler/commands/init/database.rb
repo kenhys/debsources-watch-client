@@ -18,7 +18,7 @@ module Debsources
               Groonga::Schema.define do |schema|
                 schema.create_table("Hosts", options = {:type => :patricia_trie}) do |table|
                 end
-                schema.create_table("Releases", options = {:type => :patricia_trie}) do |table|
+                schema.create_table("Suites", options = {:type => :patricia_trie}) do |table|
                 end
 
                 schema.create_table("Pkgs", options = {:type => :patricia_trie}) do |table|
