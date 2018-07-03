@@ -39,8 +39,12 @@ module Debsources
               p pkginfo_url
               version = nil
               json = nil
-              open(pkginfo_url) do |request|
-                json = JSON.parse(request.read)
+              begin
+                open(pkginfo_url) do |request|
+                  json = JSON.parse(request.read)
+                end
+              rescue
+                p "error"
               end
               json
             end
