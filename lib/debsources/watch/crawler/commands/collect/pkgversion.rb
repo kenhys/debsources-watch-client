@@ -44,12 +44,15 @@ module Debsources
               end
               json
             end
-                if json["versions"][0]["suites"].include?("sid")
-                  version = json["versions"][0]["version"]
-                end
-              end
-              version
+
+            def package_suites(json)
+              json["versions"][0]["suites"]
             end
+
+            def package_version(json)
+              json["versions"][0]["version"]
+            end
+
           end
         end
       end
