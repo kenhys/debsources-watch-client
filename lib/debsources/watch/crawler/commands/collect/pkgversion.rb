@@ -30,6 +30,7 @@ module Debsources
                 end
                 suites = package_suites(info)
                 version = package_version(info)
+                p version
                 p suites
                 if version
                   timestamp = Time.now
