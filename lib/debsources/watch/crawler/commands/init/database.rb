@@ -18,6 +18,8 @@ module Debsources
               Groonga::Schema.define do |schema|
                 schema.create_table("Hosts", options = {:type => :patricia_trie}) do |table|
                 end
+                schema.create_table("Releases", options = {:type => :patricia_trie}) do |table|
+                end
 
                 schema.create_table("Pkgs", options = {:type => :patricia_trie}) do |table|
                   table.text("name")
@@ -31,6 +33,7 @@ module Debsources
                   table.time("created_at")
                   table.time("updated_at")
                   table.reference("watch_hosting", "Hosts")
+                  table.reference("releases", "Releases", :type => :vector)
                 end
                 schema.create_table("Hosts", options = {:type => :patricia_trie}) do |table|
                   table.reference("packages", "Pkgs", options = {:type => :vector})
