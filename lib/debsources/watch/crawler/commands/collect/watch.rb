@@ -22,7 +22,16 @@ module Debsources
                 update_watch_content(@package)
               else
                 @pkgs.each do |record|
-                  package = record.key
+                  package = record._key
+                  p package
+                  suites = record.suites.collect do |suite|
+                    suite.attributes["_key"]
+                  end
+                  p suites
+                  unless suites.include?("sid")
+                    p "SKIP #{package} no unstable release"
+                    next
+                  end
                   one_week = 60 * 60 * 24 * 7
                   if @pkgs[package].updated_at > Time.now - one_week
                     p "SKIP #{package} #{Time.now - one_week} < #{@pkgs[package].updated_at}"
