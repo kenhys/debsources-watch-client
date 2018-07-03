@@ -17,6 +17,10 @@ module Debsources
 
             def execute(input: $stdin, output: $stdout)
               # Command logic goes here ...
+              packages = []
+              @pkgs.each do |record|
+                packages << record._key
+              end
               packages.each do |package|
                 version = fetch_package_version(package)
                 if version
