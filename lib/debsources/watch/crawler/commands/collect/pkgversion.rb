@@ -35,7 +35,7 @@ module Debsources
             end
 
             def fetch_package_info(package)
-              pkginfo_url = "https://sources.debian.org/api/src/#{package}"
+              pkginfo_url = "https://sources.debian.org/api/src/#{package}/"
               p pkginfo_url
               version = nil
               json = nil
