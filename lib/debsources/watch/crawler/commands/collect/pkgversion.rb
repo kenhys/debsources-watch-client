@@ -23,11 +23,20 @@ module Debsources
                 packages << record._key
               end
               packages.each do |package|
-                version = fetch_package_version(package)
+                p package
+                info = fetch_package_info(package)
+                unless info
+                  next
+                end
+                suites = package_suites(info)
+                version = package_version(info)
+                p suites
                 if version
+                  timestamp = Time.now
                   @pkgs.add(package,
                             :name => package,
-                            :version => version
+                            :version => version,
+                            :suites => suites,
                             :created_at => timestamp,
                             :updated_at => timestamp)
                 end
