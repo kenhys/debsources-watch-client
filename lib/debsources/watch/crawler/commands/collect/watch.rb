@@ -14,7 +14,7 @@ module Debsources
               @package = package
               @options = options
               GrnMini::create_or_open("data/debian-watch.db")
-              @pkgs = GrnMini::Hash.new("Pkgs")
+              @pkgs = Groonga["Pkgs"]
             end
 
             def execute(input: $stdin, output: $stdout)
