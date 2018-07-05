@@ -35,6 +35,9 @@ module Debsources
                   table.reference("watch_hosting", "Hosts")
                   table.reference("suites", "Suites", :type => :vector)
                 end
+                schema.change_table("Suites") do |table|
+                  table.index("Pkgs.suites")
+                end
                 schema.create_table("Hosts", options = {:type => :patricia_trie}) do |table|
                   table.reference("packages", "Pkgs", options = {:type => :vector})
                 end
