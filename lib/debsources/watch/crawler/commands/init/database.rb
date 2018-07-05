@@ -65,6 +65,35 @@ module Debsources
                   table.index("Pkgs.watch_content", with_position: true)
                   table.index("Pkgs.watch_original", with_position: true)
                 end
+                schema.create_table("Opts", options = {:type => :patricia_trie}) do |table|
+                  table.text("component")
+                  table.text("compression")
+                  table.integer("repack")
+                  table.text("repacksuffix")
+                  table.text("mode")
+                  table.text("pretty")
+                  table.text("date")
+                  table.text("gitmode")
+                  table.text("pgpmode")
+                  table.integer("decompress")
+                  table.integer("bare")
+                  table.text("user-agent")
+                  table.integer("pasv")
+                  table.integer("passive")
+                  table.integer("active")
+                  table.integer("nopasv")
+                  table.text("unzipopt")
+                  table.text("dversionmangle")
+                  table.text("dirversionmangle")
+                  table.text("pagemangle")
+                  table.text("uversionmangle")
+                  table.text("versionmangle")
+                  table.text("hrefdecode")
+                  table.text("downloadurlmangle")
+                  table.text("filenamemangle")
+                  table.text("pgpsigurlmangle")
+                  table.text("oversionmangle")
+                end
               end
             end
           end
