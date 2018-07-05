@@ -10,6 +10,18 @@ module Debsources
 
           namespace :collect
 
+          desc 'opts [PACKAGE]', 'Command description...'
+          method_option :help, aliases: '-h', type: :boolean,
+                               desc: 'Display usage information'
+          def opts(package = nil)
+            if options[:help]
+              invoke :help, ['opts']
+            else
+              require_relative 'collect/opts'
+              Debsources::Watch::Crawler::Commands::Collect::Opts.new(package, options).execute
+            end
+          end
+
           desc 'pkgversion [PACKAGE]', 'Command description...'
           method_option :help, aliases: '-h', type: :boolean,
                                desc: 'Display usage information'
