@@ -9,6 +9,8 @@ module Debsources
         DOT_DEBSOURCES_WATCH_CRAWLER = ".debsources-watch-crawler"
 
         def initialize
+          @keys = []
+          load
         end
 
         def home
@@ -24,6 +26,13 @@ module Debsources
 
         def path
           File.join(home, DEBSOURCES_WATCH_CRAWLER_CONFIG)
+        end
+
+        def load
+          YAML.load_file(path).each do |key, value|
+            @keys << key
+            instance_variable_set("@#{key}", value)
+          end
         end
       end
     end
