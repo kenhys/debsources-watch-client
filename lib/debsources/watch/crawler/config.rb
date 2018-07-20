@@ -34,6 +34,19 @@ module Debsources
             instance_variable_set("@#{key}", value)
           end
         end
+
+        def save
+          config = {}
+          instance_variables.each do |var|
+            key = var.to_s.sub(/^@/, '')
+            unless key == "keys"
+              config[key] = instance_variable_get(var.to_s)
+            end
+          end
+          File.open(path, "w+") do |file|
+            file.puts(YAML.dump(config))
+          end
+        end
       end
     end
   end
