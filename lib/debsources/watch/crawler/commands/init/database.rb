@@ -96,6 +96,15 @@ module Debsources
                   table.text("filenamemangle")
                   table.text("pgpsigurlmangle")
                   table.text("oversionmangle")
+                  table.text("anon_dversionmangle")
+                  table.text("anon_dirversionmangle")
+                  table.text("anon_pagemangle")
+                  table.text("anon_uversionmangle")
+                  table.text("anon_versionmangle")
+                  table.text("anon_downloadurlmangle")
+                  table.text("anon_filenamemangle")
+                  table.text("anon_pgpsigurlmangle")
+                  table.text("anon_oversionmangle")
                 end
               end
             end
