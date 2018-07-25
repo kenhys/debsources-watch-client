@@ -20,6 +20,9 @@ module Debsources
         end
         map %w(--version -v) => :version
 
+        require_relative 'commands/config'
+        register Debsources::Watch::Crawler::Commands::Config, 'config', 'config [SUBCOMMAND]', 'Command description...'
+
         require_relative 'commands/verify'
         register Debsources::Watch::Crawler::Commands::Verify, 'verify', 'verify [SUBCOMMAND]', 'Command description...'
 
