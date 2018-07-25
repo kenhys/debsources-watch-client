@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative '../../command'
+require_relative '../../config'
 
 module Debsources
   module Watch
@@ -14,8 +15,7 @@ module Debsources
             end
 
             def execute(input: $stdin, output: $stdout)
-              # Command logic goes here ...
-              output.puts "OK"
+              p Debsources::Watch::Crawler::Config.new
             end
           end
         end
