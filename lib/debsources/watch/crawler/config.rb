@@ -32,11 +32,7 @@ module Debsources
 
         def load
           unless File.exist?(path)
-            p path
-            open(path, "w+") do |file|
-              @keys["database_path"] = File.join(home, DEBSOURCES_DB_FILE)
-              file.puts(YAML.dump(config))
-            end
+            setup_default_config
             return
           end
           YAML.load_file(path).each do |key, value|
@@ -55,6 +51,14 @@ module Debsources
           end
           File.open(path, "w+") do |file|
             file.puts(YAML.dump(config))
+          end
+        end
+
+        def setup_default_config
+          p path
+          open(path, "w+") do |file|
+            @keys["database_path"] = File.join(home, DEBSOURCES_DB_FILE)
+            file.puts(YAML.dump(@keys))
           end
         end
       end
