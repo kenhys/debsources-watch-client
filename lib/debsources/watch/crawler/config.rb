@@ -11,7 +11,7 @@ module Debsources
         DEBSOURCES_DB_FILE = "db/debian-watch.db"
 
         def initialize
-          @keys = []
+          @keys = {}
           load
         end
 
