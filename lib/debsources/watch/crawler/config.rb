@@ -1,4 +1,5 @@
 require "yaml"
+require 'open-uri'
 
 module Debsources
   module Watch
@@ -31,7 +32,8 @@ module Debsources
 
         def load
           unless File.exist?(path)
-            open(path) do |file|
+            p path
+            open(path, "w+") do |file|
               @keys["database_path"] = File.join(home, DEBSOURCES_DB_FILE)
               file.puts(YAML.dump(config))
             end
