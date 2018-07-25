@@ -11,6 +11,7 @@ case $1 in
 	groonga -n $DATABASE_DIR/$DATABASE_FILE < $DUMP_FILE
 	;;
     *)
+	bundle exec exe/debsources-watch-crawler $@
 	;;
 esac
       
