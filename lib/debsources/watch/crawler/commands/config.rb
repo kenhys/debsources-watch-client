@@ -13,7 +13,7 @@ module Debsources
           desc 'init PATH', 'Command description...'
           method_option :help, aliases: '-h', type: :boolean,
                                desc: 'Display usage information'
-          def init(path)
+          def init(path=nil)
             if options[:help]
               invoke :help, ['init']
             else

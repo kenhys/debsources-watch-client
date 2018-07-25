@@ -8,7 +8,7 @@ module Debsources
       module Commands
         class Config
           class Init < Debsources::Watch::Crawler::Command
-            def initialize(path, options)
+            def initialize(path=nil, options)
               @path = path
               @options = options
             end
