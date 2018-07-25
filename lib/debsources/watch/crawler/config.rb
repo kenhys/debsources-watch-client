@@ -7,6 +7,7 @@ module Debsources
       class Config
         DEBSOURCES_WATCH_CRAWLER_CONFIG = "debsources-watch-crawler.yaml"
         DOT_DEBSOURCES_WATCH_CRAWLER = ".debsources-watch-crawler"
+        DEBSOURCES_DB_FILE = "db/debian-watch.db"
 
         def initialize
           @keys = []
@@ -29,6 +30,13 @@ module Debsources
         end
 
         def load
+          unless File.exist?(path)
+            open(path) do |file|
+              @keys["database_path"] = File.join(home, DEBSOURCES_DB_FILE)
+              file.puts(YAML.dump(config))
+            end
+            return
+          end
           YAML.load_file(path).each do |key, value|
             @keys << key
             instance_variable_set("@#{key}", value)
