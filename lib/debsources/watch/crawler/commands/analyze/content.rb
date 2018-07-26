@@ -13,9 +13,8 @@ module Debsources
             end
 
             def execute(input: $stdin, output: $stdout)
-              p ::Debsources::Watch::Crawler::Config.new
-
-              GrnMini::create_or_open("data/debian-watch.db")
+              
+              create_or_open_database(@config.path)
               @pkgs = GrnMini::Hash.new("Pkgs")
               pkglist = []
               @pkgs.each do |record|
