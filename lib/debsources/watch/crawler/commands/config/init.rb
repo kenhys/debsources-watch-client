@@ -15,7 +15,7 @@ module Debsources
             end
 
             def execute(input: $stdin, output: $stdout)
-              p Debsources::Watch::Crawler::Config.new
+              Debsources::Watch::Crawler::Config.new
             end
           end
         end
