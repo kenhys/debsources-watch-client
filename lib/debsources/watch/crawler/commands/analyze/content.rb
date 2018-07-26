@@ -11,11 +11,10 @@ module Debsources
             def initialize(options)
               @options = options
               @config = ::Debsources::Watch::Crawler::Config.new
+              Debsources::Watch::Crawler.create_or_open_database(@config.database_path)
             end
 
             def execute(input: $stdin, output: $stdout)
-              
-              Debsources::Watch::Crawler.create_or_open_database(@config.database_path)
               @pkgs = GrnMini::Hash.new("Pkgs")
               pkglist = []
               @pkgs.each do |record|
