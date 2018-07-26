@@ -4,6 +4,7 @@ require "groonga"
 module Debsources
   module Watch
     module Crawler
+      module_function
 
       def create_or_open_database(path)
         unless File.exist?(path)
