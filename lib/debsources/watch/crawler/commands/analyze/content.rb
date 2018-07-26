@@ -1,5 +1,6 @@
 require_relative '../../command'
 require_relative '../../config'
+require_relative '../../../crawler'
 
 module Debsources
   module Watch
@@ -14,7 +15,7 @@ module Debsources
 
             def execute(input: $stdin, output: $stdout)
               
-              create_or_open_database(@config.path)
+              Debsources::Watch::Crawler.create_or_open_database(@config.database_path)
               @pkgs = GrnMini::Hash.new("Pkgs")
               pkglist = []
               @pkgs.each do |record|
