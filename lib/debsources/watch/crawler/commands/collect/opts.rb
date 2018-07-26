@@ -11,11 +11,13 @@ module Debsources
             def initialize(package, options)
               @package = package
               @options = options
+              @config = ::Debsources::Watch::Crawler::Config.new
             end
 
             def execute(input: $stdin, output: $stdout)
               # Command logic goes here ...
               output.puts "OK"
+              Debsources::Watch::Crawler.create_or_open_database(@config.database_path)
             end
           end
         end
