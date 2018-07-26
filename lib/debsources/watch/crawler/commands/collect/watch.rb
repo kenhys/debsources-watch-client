@@ -13,7 +13,8 @@ module Debsources
             def initialize(package=nil, options)
               @package = package
               @options = options
-              GrnMini::create_or_open("data/debian-watch.db")
+              @config = ::Debsources::Watch::Crawler::Config.new
+              Debsources::Watch::Crawler.create_or_open_database(@config.database_path)
               @pkgs = Groonga["Pkgs"]
             end
 
