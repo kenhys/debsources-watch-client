@@ -10,6 +10,8 @@ module Debsources
         DOT_DEBSOURCES_WATCH_CRAWLER = ".debsources-watch-crawler"
         DEBSOURCES_DB_FILE = "db/debian-watch.db"
 
+        attr_reader :database_path
+
         def initialize
           @keys = {}
           load
