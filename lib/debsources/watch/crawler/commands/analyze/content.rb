@@ -12,10 +12,10 @@ module Debsources
               @options = options
               @config = ::Debsources::Watch::Crawler::Config.new
               Debsources::Watch::Crawler.create_or_open_database(@config.database_path)
+              @pkgs = Groonga["Pkgs"]
             end
 
             def execute(input: $stdin, output: $stdout)
-              @pkgs = GrnMini::Hash.new("Pkgs")
               pkglist = []
               @pkgs.each do |record|
                 watch_content = parse_watch_original(record.watch_content)
