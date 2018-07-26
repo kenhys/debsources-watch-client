@@ -11,10 +11,11 @@ module Debsources
           class Database < Debsources::Watch::Crawler::Command
             def initialize(options)
               @options = options
+              @config = ::Debsources::Watch::Crawler::Config.new
+              Debsources::Watch::Crawler.create_or_open_database(@config.database_path)
             end
 
             def execute(input: $stdin, output: $stdout)
-              GrnMini::create_or_open("data/debian-watch.db")
               Groonga::Schema.define do |schema|
                 schema.create_table("Hosts", options = {:type => :patricia_trie}) do |table|
                 end
