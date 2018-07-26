@@ -9,6 +9,7 @@ module Debsources
           class Content < Debsources::Watch::Crawler::Command
             def initialize(options)
               @options = options
+              @config = ::Debsources::Watch::Crawler::Config.new
             end
 
             def execute(input: $stdin, output: $stdout)
