@@ -15,12 +15,8 @@ module Debsources
             def initialize(package, options)
               @package = package
               @options = options
-              path = "data/debian-watch.db"
-              unless File.exist?(path)
-                Groonga::Database.create(path: path)
-              else
-                Groonga::Database.open(path)
-              end
+              @config = ::Debsources::Watch::Crawler::Config.new
+              Debsources::Watch::Crawler.create_or_open_database(@config.database_path)
               @dehs = Groonga["Dehs"]
             end
 
