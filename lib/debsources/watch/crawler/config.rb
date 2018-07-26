@@ -36,7 +36,7 @@ module Debsources
             return
           end
           YAML.load_file(path).each do |key, value|
-            @keys << key
+            @keys[key] = value
             instance_variable_set("@#{key}", value)
           end
         end
