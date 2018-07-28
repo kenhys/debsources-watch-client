@@ -1,0 +1,9 @@
+#!/usr/bin/perl -w
+
+use strict;
+use warnings;
+use Data::Dumper;
+use lib '/home/kenhys/work/debian/perl-Parse-Debian-Watch/lib';
+use Parse::Debian::Watch;
+
+my $package = Parse::Debian::Watch->new(path => 't.txt');
