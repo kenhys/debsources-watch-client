@@ -51,7 +51,7 @@ module Debsources
                   @graph.data("version #{record._key} (#{record['_nsubrecs']})", [record["_nsubrecs"]])
                 end
               end
-              @graph.write("group-by-watch-version.png")
+              @graph.write("#{@images_dir}/group-by-watch-version.png")
             end
 
             def generate_watch_file_pie_graph
@@ -66,7 +66,7 @@ module Debsources
                   @graph.data("no watch file (#{record["_nsubrecs"]})", record["_nsubrecs"])
                 end
               end
-              @graph.write("group-by-watch-file.png")
+              @graph.write("#{@images_dir}/group-by-watch-file.png")
             end
 
             def generate_watch_host_top5_pie_graph
@@ -88,7 +88,7 @@ module Debsources
                 end
               end
               @graph.data("other (#{other_data})", [other_data])
-              @graph.write("group-by-top5-hosting.png")
+              @graph.write("#{@images_dir}/group-by-top5-hosting.png")
               p other_data
               p total
             end
@@ -112,7 +112,7 @@ module Debsources
               end
               @graph.data("top 5 sites (#{top5})", top5)
               @graph.data("other (#{other_data})", [other_data])
-              @graph.write("group-by-top5all-hosting.png")
+              @graph.write("#{@images_dir}/group-by-top5all-hosting.png")
             end
 
             def generate_watch_host_salsa_pie_graph
@@ -132,7 +132,7 @@ module Debsources
                 @graph.data("salsa.d.o (#{record['_nsubrecs']})", record["_nsubrecs"])
               end
               @graph.data("other (#{other_count})", other_count)
-              @graph.write("group-by-hosting-salsa.png")
+              @graph.write("#{@images_dir}/group-by-hosting-salsa.png")
             end
           end
         end
