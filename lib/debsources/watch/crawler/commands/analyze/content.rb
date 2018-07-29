@@ -53,7 +53,7 @@ module Debsources
               generate_watch_host_salsa_pie_graph
             end
 
-            def parse_watch_original(original_content)
+            def extract_watch_content(original_content)
               content = ""
               if original_content
                 original_content.split("\n").collect do |line|
