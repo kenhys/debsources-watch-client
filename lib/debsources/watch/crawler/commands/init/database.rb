@@ -2,7 +2,6 @@
 
 require_relative '../../command'
 require_relative '../../config'
-require 'grn_mini'
 
 module Debsources
   module Watch
