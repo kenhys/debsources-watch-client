@@ -13,6 +13,8 @@ module Debsources
             def initialize(type = nil, options)
               @type = type
               @options = options
+              root_dir = File.dirname(File.dirname(File.expand_path($0)))
+              @images_dir = File.join(root_dir, "doc/images")
             end
 
             def execute(input: $stdin, output: $stdout)
