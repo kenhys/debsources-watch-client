@@ -1,2 +1,3 @@
 ---
 database_path: "/home/kenhys/.debsources-watch-crawler/db/debian-watch.db"
+crawler_lib_path: "/home/kenhys/work/debian/debsources-watch-crawler/lib"
