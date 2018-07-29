@@ -5,12 +5,12 @@ use warnings;
 use Data::Dumper;
 use lib '/home/kenhys/work/debian/perl-Parse-Debian-Watch/lib';
 use Parse::Debian::Watch;
-
+use YAML::Syck;
 
 sub main {
     my $watch = shift;
     my $package = Parse::Debian::Watch->new(path => $watch);
-    print Dumper $package;
+    print YAML::Syck::Dump($package);
 }
 
 main(@ARGV);
