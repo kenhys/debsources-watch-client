@@ -14,6 +14,7 @@ module Debsources
               @config = ::Debsources::Watch::Crawler::Config.new
               Debsources::Watch::Crawler.create_or_open_database(@config.database_path)
               @pkgs = Groonga["Pkgs"]
+              @opts = Groonga["Opts"]
               root_dir = File.dirname(File.dirname(File.expand_path($0)))
               @runner_path = File.join(root_dir,
                                        "bin/parse-watch-file")
@@ -52,6 +53,27 @@ module Debsources
                 record.watch_content = watch_content
 
                 yaml = parse_watch_original(raw_content)
+                add_package_opts(record._key, yaml)
+              end
+              generate_watch_version_pie_graph
+              generate_watch_file_pie_graph
+              generate_watch_host_top5_pie_graph
+              generate_watch_host_top5all_pie_graph
+              generate_watch_host_salsa_pie_graph
+            end
+
+            def add_package_opts(package, yaml)
+              records = @opts.select do |record|
+                record._key == package
+              end
+              if records.size == 0
+                timestamp = Time.now
+                @opts.add(package, :updated_at => timestamp)
+              end
+              records = @opts.select do |record|
+                record._key == package
+              end
+              records.each do |record|
                 modified = false
                 unless yaml["component"].empty?
                   modified = true
@@ -162,11 +184,6 @@ module Debsources
                   record.oversionmangle = yaml["oversionmangle"]
                 end
               end
-              generate_watch_version_pie_graph
-              generate_watch_file_pie_graph
-              generate_watch_host_top5_pie_graph
-              generate_watch_host_top5all_pie_graph
-              generate_watch_host_salsa_pie_graph
             end
 
             def extract_watch_content(original_content)
