@@ -6,4 +6,11 @@ use Data::Dumper;
 use lib '/home/kenhys/work/debian/perl-Parse-Debian-Watch/lib';
 use Parse::Debian::Watch;
 
-my $package = Parse::Debian::Watch->new(path => $ARGV[0]);
+
+sub main {
+    my $watch = shift;
+    my $package = Parse::Debian::Watch->new(path => $watch);
+    print Dumper $package;
+}
+
+main(@ARGV);
