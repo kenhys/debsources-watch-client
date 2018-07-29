@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 require_relative '../../command'
+require_relative '../../config'
+require_relative '../../../crawler'
 
 module Debsources
   module Watch
