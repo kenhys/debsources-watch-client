@@ -14,6 +14,18 @@ module Debsources
 
           namespace :analyze
 
+          desc 'graph [TYPE]', 'Command description...'
+          method_option :help, aliases: '-h', type: :boolean,
+                               desc: 'Display usage information'
+          def graph(type = nil)
+            if options[:help]
+              invoke :help, ['graph']
+            else
+              require_relative 'analyze/graph'
+              Debsources::Watch::Crawler::Commands::Analyze::Graph.new(type, options).execute
+            end
+          end
+
           desc 'content', 'Command description...'
           method_option :help, aliases: '-h', type: :boolean,
                                desc: 'Display usage information'
