@@ -21,7 +21,8 @@ module Debsources
             def execute(input: $stdin, output: $stdout)
               pkglist = []
               @pkgs.each do |record|
-                watch_content = parse_watch_original(record.watch_content)
+                raw_content = record.watch_content
+                watch_content = extract_watch_content(raw_content)
                 if watch_content.empty?
                   record.watch_version = 0
                   record.watch_missing = 1
