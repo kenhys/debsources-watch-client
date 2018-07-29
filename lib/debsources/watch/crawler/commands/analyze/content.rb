@@ -13,6 +13,9 @@ module Debsources
               @config = ::Debsources::Watch::Crawler::Config.new
               Debsources::Watch::Crawler.create_or_open_database(@config.database_path)
               @pkgs = Groonga["Pkgs"]
+              root_dir = File.dirname(File.dirname(File.expand_path($0)))
+              @runner_path = File.join(root_dir),
+                                       "bin/parse-watch-file")
             end
 
             def execute(input: $stdin, output: $stdout)
