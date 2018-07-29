@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative '../../command'
+require_relative '../../config'
 require 'grn_mini'
 
 module Debsources
