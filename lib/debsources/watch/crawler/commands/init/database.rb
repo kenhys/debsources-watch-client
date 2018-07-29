@@ -107,6 +107,7 @@ module Debsources
                   table.text("anon_filenamemangle")
                   table.text("anon_pgpsigurlmangle")
                   table.text("anon_oversionmangle")
+                  table.time("updated_at")
                 end
               end
             end
