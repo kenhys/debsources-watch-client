@@ -11,6 +11,7 @@ module Debsources
         DEBSOURCES_DB_FILE = "db/debian-watch.db"
 
         attr_reader :database_path
+        attr_reader :crawler_lib_path
 
         def initialize
           @keys = {}
