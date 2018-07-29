@@ -82,7 +82,7 @@ module Debsources
                   table.text("pgpmode")
                   table.integer("decompress")
                   table.integer("bare")
-                  table.text("user-agent")
+                  table.text("user_agent")
                   table.integer("pasv")
                   table.integer("passive")
                   table.integer("active")
