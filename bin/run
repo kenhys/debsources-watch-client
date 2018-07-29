@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DATABASE_DIR=db
+DATABASE_DIR=$HOME/.debsources-watch-crawler/db
 DATABASE_FILE=debian-watch.db
 DUMP_FILE=data/dump-201807231000.grn
 
