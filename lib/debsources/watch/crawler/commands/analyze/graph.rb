@@ -10,7 +10,7 @@ module Debsources
       module Commands
         class Analyze
           class Graph < Debsources::Watch::Crawler::Command
-            def initialize(type, options)
+            def initialize(type = nil, options)
               @type = type
               @options = options
             end
