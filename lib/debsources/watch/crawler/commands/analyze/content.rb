@@ -1,6 +1,7 @@
 require_relative '../../command'
 require_relative '../../config'
 require_relative '../../../crawler'
+require 'tempfile'
 
 module Debsources
   module Watch
@@ -72,6 +73,15 @@ module Debsources
                 end
               end
               content
+            end
+
+            def parse_watch_original(original_content)
+              tf = Tempfile.open("dwatch") do |f|
+                f.puts(original_content)
+                f
+              end
+              content = `perl -I#{@config.crawler_lib_path} #{@runner_path} #{tf.path}`
+              YAML.load(content)
             end
 
             def setup_graph
