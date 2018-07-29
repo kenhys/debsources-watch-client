@@ -7,7 +7,7 @@ DUMP_FILE=data/dump-201807231000.grn
 case $1 in
     rebuild)
 	rm -fr $DATABASE_DIR/
-	mkdir $DATABASE_DIR
+	mkdir -p $DATABASE_DIR
 	groonga -n $DATABASE_DIR/$DATABASE_FILE < $DUMP_FILE
 	;;
     *)
