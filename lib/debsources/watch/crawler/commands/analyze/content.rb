@@ -50,6 +50,117 @@ module Debsources
                   record.host_missing = 1
                 end
                 record.watch_content = watch_content
+
+                yaml = parse_watch_original(raw_content)
+                modified = false
+                unless yaml["component"].empty?
+                  modified = true
+                  record.component = yaml["component"]
+                end
+                unless yaml["compression"].empty?
+                  modified = true
+                  record.compression = yaml["compression"]
+                end
+                if yaml["repack"] == 1
+                  modified = true
+                  record.repack = 1
+                end
+                unless yaml["repacksuffix"].empty?
+                  modified = true
+                  record.repacksuffix = yaml["repacksuffix"]
+                end
+                unless yaml["mode"].empty?
+                  modified = true
+                  record.mode = yaml["mode"]
+                end
+                unless yaml["pretty"].empty?
+                  modified = true
+                  record.pretty = yaml["pretty"]
+                end
+                unless yaml["date"].empty?
+                  modified = true
+                  record.date = yaml["date"]
+                end
+                unless yaml["gitmode"].empty?
+                  modified = true
+                  record.gitmode = yaml["gitmode"]
+                end
+                unless yaml["pgpmode"].empty?
+                  modified = true
+                  record.pgpmode = yaml["pgpmode"]
+                end
+                if yaml["decompress"] == 1
+                  modified = true
+                  record.decompress = 1
+                end
+                if yaml["bare"] == 1
+                  modified = true
+                  record.bare = 1
+                end
+                unless yaml["user_agent"].empty?
+                  modified = true
+                  record.user_agent = yaml["user_agent"]
+                end
+                if yaml["pasv"] == 1
+                  modified = true
+                  record.pasv = 1
+                end
+                if yaml["passive"] == 1
+                  modified = true
+                  record.passive = 1
+                end
+                if yaml["active"] == 1
+                  modified = true
+                  record.active = 1
+                end
+                if yaml["nopasv"] == 1
+                  modified = true
+                  record.nopasv = 1
+                end
+                unless yaml["unzipopt"].empty?
+                  modified = true
+                  record.unzipopt = yaml["unzipopt"]
+                end
+                unless yaml["dversionmangle"].empty?
+                  modified = true
+                  record.dversionmangle = yaml["dversionmangle"]
+                end
+                unless yaml["dirversionmangle"].empty?
+                  modified = true
+                  record.dirversionmangle = yaml["dirversionmangle"]
+                end
+                unless yaml["pagemangle"].empty?
+                  modified = true
+                  record.pagemangle = yaml["pagemangle"]
+                end
+                unless yaml["uversionmangle"].empty?
+                  modified = true
+                  record.uversionmangle = yaml["uversionmangle"]
+                end
+                unless yaml["versionmangle"].empty?
+                  modified = true
+                  record.versionmangle = yaml["versionmangle"]
+                end
+                unless yaml["hrefdecode"].empty?
+                  modified = true
+                  record.hrefdecode = yaml["hrefdecode"]
+                end
+                unless yaml["downloadurlmangle"].empty?
+                  modified = true
+                  record.downloadurlmangle = yaml["downloadurlmangle"]
+                end
+                unless yaml["filenamemangle"].empty?
+                  modified = true
+                  record.filenamemangle = yaml["filenamemangle"]
+                end
+                unless yaml["pgpsigurlmangle"].empty?
+                  modified = true
+                  record.pgpsigurlmangle = yaml["pgpsigurlmangle"]
+                end
+                unless yaml["oversionmangle"].empty?
+                  modified = true
+                  record.oversionmangle = yaml["oversionmangle"]
+                end
               end
               generate_watch_version_pie_graph
               generate_watch_file_pie_graph
