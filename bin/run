@@ -10,6 +10,9 @@ case $1 in
 	mkdir -p $DATABASE_DIR
 	groonga -n $DATABASE_DIR/$DATABASE_FILE < $DUMP_FILE
 	;;
+    httpd)
+	groonga --protocol http --port 10042 -s $DATABASE_DIR/$DATABASE_FILE
+	;;
     *)
 	bundle exec exe/debsources-watch-crawler $@
 	;;
