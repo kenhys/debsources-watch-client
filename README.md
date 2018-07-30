@@ -20,6 +20,10 @@ Or install it yourself as:
 
     $ gem install debsources-watch-crawler
 
+```perl
+cpanm install YAML::Syck
+```
+
 ## Usage
 
 TODO: Write usage instructions here
