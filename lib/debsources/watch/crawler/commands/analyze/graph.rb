@@ -106,6 +106,7 @@ module Debsources
                   other_data += record["_nsubrecs"]
                 end
               end
+              raise DatasetMismatchError if dataset.size != total
               @graph.data("other (#{other_data})", [other_data])
               @graph.write("#{@images_dir}/group-by-top5-hosting.png")
               p other_data
