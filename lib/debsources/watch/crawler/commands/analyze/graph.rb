@@ -40,8 +40,15 @@ module Debsources
 
             def generate_watch_version_pie_graph
               dataset = @pkgs.select do |record|
+            def unstable_packages_with_watch
+              dataset = @pkgs.select("suites:@sid") do |record|
                 record.watch_missing == 0
               end
+              # for debconf18
+              raise Exception if dataset.size != 23212
+              dataset
+            end
+
               groups = GrnMini::Util::group_with_sort(dataset, "watch_version")
               setup_graph
               @graph.title = "Grouping by debian/watch version"
