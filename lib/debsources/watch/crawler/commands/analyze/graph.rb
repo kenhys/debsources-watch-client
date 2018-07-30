@@ -47,6 +47,13 @@ module Debsources
               dataset
             end
 
+            def unstable_packages
+              dataset = @pkgs.select("suites:@sid")
+              # for debconf18
+              raise Exception if dataset.size != 27660
+              dataset
+            end
+
             def generate_watch_version_pie_graph
               dataset = unstable_packages_with_watch
               groups = GrnMini::Util::group_with_sort(dataset, "watch_version")
