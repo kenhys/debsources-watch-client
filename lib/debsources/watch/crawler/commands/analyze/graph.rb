@@ -69,7 +69,8 @@ module Debsources
             end
 
             def generate_watch_file_pie_graph
-              groups = GrnMini::Util::group_with_sort(@pkgs, "watch_missing")
+              dataset = unstable_packages
+              groups = GrnMini::Util::group_with_sort(dataset, "watch_missing")
               setup_graph
               @graph.title = "How many packages\nsupports debian/watch?"
 
