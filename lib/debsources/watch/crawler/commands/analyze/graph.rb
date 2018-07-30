@@ -38,8 +38,6 @@ module Debsources
               @graph.show_values_as_labels = false
             end
 
-            def generate_watch_version_pie_graph
-              dataset = @pkgs.select do |record|
             def unstable_packages_with_watch
               dataset = @pkgs.select("suites:@sid") do |record|
                 record.watch_missing == 0
@@ -49,6 +47,8 @@ module Debsources
               dataset
             end
 
+            def generate_watch_version_pie_graph
+              dataset = unstable_packages_with_watch
               groups = GrnMini::Util::group_with_sort(dataset, "watch_version")
               setup_graph
               @graph.title = "Grouping by debian/watch version"
