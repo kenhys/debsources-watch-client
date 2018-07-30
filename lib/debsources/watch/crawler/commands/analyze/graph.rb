@@ -10,6 +10,9 @@ module Debsources
       module Commands
         class Analyze
           class Graph < Debsources::Watch::Crawler::Command
+
+            class DatasetMismatchError < StandardError; end
+
             def initialize(type = nil, options)
               @type = type
               @options = options
@@ -43,14 +46,14 @@ module Debsources
                 record.watch_missing == 0
               end
               # for debconf18
-              raise Exception if dataset.size != 23212
+              raise DatasetMismatchError if dataset.size != 23212
               dataset
             end
 
             def unstable_packages
               dataset = @pkgs.select("suites:@sid")
               # for debconf18
-              raise Exception if dataset.size != 27660
+              raise DatasetMismatchError if dataset.size != 27660
               dataset
             end
 
@@ -74,13 +77,16 @@ module Debsources
               setup_graph
               @graph.title = "How many packages\nsupports debian/watch?"
 
+              total = 0
               groups.each do |record|
+                total += record["_nsubrecs"]
                 if record._key == 0
                   @graph.data("watch file (#{record["_nsubrecs"]})", record["_nsubrecs"])
                 else
                   @graph.data("no watch file (#{record["_nsubrecs"]})", record["_nsubrecs"])
                 end
               end
+              raise DatasetMismatchError if dataset.size != total
               @graph.write("#{@images_dir}/group-by-watch-file.png")
             end
 
