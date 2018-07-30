@@ -91,9 +91,7 @@ module Debsources
             end
 
             def generate_watch_host_top5_pie_graph
-              dataset = @pkgs.select do |record|
-                record.host_missing == 0
-              end
+              dataset = unstable_packages_with_watch
               groups = GrnMini::Util::group_with_sort(dataset, "watch_hosting")
               setup_graph
               @graph.title = "Top 5 upstream hosting site"
