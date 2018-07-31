@@ -4,6 +4,11 @@ require_relative '../../command'
 require_relative '../../config'
 require_relative '../../../crawler'
 
+begin
+  require 'gruff'
+rescue
+end
+
 module Debsources
   module Watch
     module Crawler
