@@ -80,7 +80,7 @@ module Debsources
               dataset = unstable_packages
               groups = GrnMini::Util::group_with_sort(dataset, "watch_missing")
               setup_graph
-              @graph.title = "How many packages\nsupports debian/watch?"
+              @graph.title = "How many packages\nsupport debian/watch?"
 
               total = 0
               groups.each do |record|
